@@ -8,7 +8,6 @@ public class RapLiteClient implements Client {
 
   @Override
   public <T extends ClientService> T getService( Class<T> type ) {
-    // TODO Auto-generated method stub
     return null;
   }
 

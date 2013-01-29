@@ -38,7 +38,7 @@ public class RapLiteServlet extends HttpServlet {
   {
     String path = req.getPathInfo();
     if( path == null ) {
-      deliverFromLocal( "html/index.html", resp );
+      deliverHTML( resp );
     } else if( path.equals( "/rap-lite.js" ) ) {
       deliverJavaScriptLoader( req, resp );
     } else {
@@ -98,12 +98,8 @@ public class RapLiteServlet extends HttpServlet {
     }
   }
 
-  /**
-   * Tries to get the file from this bundle first, then goes to the rwt bundle
-   * @param path
-   * @param resp
-   */
-  private static void deliverFromLocal( String path, HttpServletResponse resp ) {
+  private static void deliverHTML( HttpServletResponse resp ) {
+    String path = "html/index.html";
     ClassLoader loader = RapLiteServlet.class.getClassLoader();
     InputStream stream = loader.getResourceAsStream( path );
     PrintWriter writer = null;
@@ -112,8 +108,7 @@ public class RapLiteServlet extends HttpServlet {
       copyContents( stream, writer );
       writer.close();
     } catch( IOException e ) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
+      throw new RuntimeException( e );
     } finally {
       try {
         stream.close();
