@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Rap-lite
+Bundle-SymbolicName: org.eclipse.rap.lite;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Require-Bundle: org.eclipse.rap.rwt;bundle-version="2.0.0"
+Service-Component: OSGI-INF/config.xml
+Import-Package: javax.servlet;version="2.6.0",
+ javax.servlet.http,
+ org.osgi.framework;version="1.7.0",
+ org.osgi.service.http;version="1.2.1"
