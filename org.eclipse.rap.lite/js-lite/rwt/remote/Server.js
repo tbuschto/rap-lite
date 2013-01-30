@@ -54,10 +54,13 @@ rwt.remote.Server.prototype = {
         type: "POST",
         url: this._url,
         data: data,
-        success: this._success,
+        success : this._success,
+        error : this._error,
+        converters :{
+          "text application/json" : JSON.parse
+        },
         dataType: "application/json",
-        contentType : "application/json; charset=UTF-8",
-        processData : false
+        contentType : "application/json; charset=UTF-8"
       } );
     }
   },
@@ -65,6 +68,10 @@ rwt.remote.Server.prototype = {
   _success : function( data, textStatus, jqXHR ) {
     rwt.remote.MessageProcessor.processMessage( data );
     rap._.notify( "render" );
+  },
+
+  _error : function( jqXHR, textStatus, errorThrown ) {
+    alert( textStatus + ": " + errorThrown );
   }
 
 
