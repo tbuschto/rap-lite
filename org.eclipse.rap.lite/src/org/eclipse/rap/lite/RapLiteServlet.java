@@ -22,9 +22,12 @@ public class RapLiteServlet extends HttpServlet {
 
   private String[] FILES = new String[]{
     "jquery-1.9.0.min.js",
+    "underscore-1.4.4.min.js",
+    "backbone-0.9.10.min.js",
     "rap.js",
     "bootstrap.js",
     "rwt/widgets/Display.js",
+    "rwt/remote/Server.js",
     "rwt/remote/MessageProcessor.js",
     "finalize.js"
   };
@@ -94,7 +97,7 @@ public class RapLiteServlet extends HttpServlet {
         throw new RuntimeException( e );
       }
     } else {
-      System.out.println( "Could not find " + file );
+      System.out.println( "Request failed:" + req.getRequestURL() );
     }
   }
 
