@@ -1,4 +1,4 @@
-namespace = function( name ) { // cleaned up later
+namespace = function( name, object ) { // clean up later
   var splits = name.split( "." );
   var parent = window;
   var part = splits[ 0 ];
@@ -10,6 +10,17 @@ namespace = function( name ) { // cleaned up later
     }
   }
   if( parent[ part ] === undefined ) {
-    parent[ part ] = {};
+    parent[ part ] = object || {};
+  }
+};
+
+rwt = {
+  qx : {
+    Class : {
+      // supports only static classes
+      define : function( name, object ) {
+        namespace( name, object.statics );
+      }
+    }
   }
 };

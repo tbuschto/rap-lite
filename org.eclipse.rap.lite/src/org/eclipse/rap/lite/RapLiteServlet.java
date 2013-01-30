@@ -27,12 +27,14 @@ public class RapLiteServlet extends HttpServlet {
     "backbone-0.9.10.min.js",
     "bootstrap.js",
     "rap.js",
+    "rwt/util/Strings.js",
     "rwt/remote/Server.js",
     "rwt/remote/HandlerRegistry.js",
     "rwt/remote/ObjectRegistry.js",
     "rwt/remote/MessageProcessor.js",
     "rwt/remote/MessageWriter.js",
     "rwt/widgets/Display.js",
+    "rwt/widgets/Shell.js",
     "finalize.js"
   };
 
