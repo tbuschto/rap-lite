@@ -16,24 +16,32 @@ rwt.widgets.Display.getCurrent = function() {
 
 rwt.widgets.Display.prototype = {
 
+  applyObjectId : function() {
+    this.initialize();
+  },
+
   initialize : function() {
     server.getMessageWriter().appendHead( "rwt_initialize", true );
-  //  this._appendWindowSize();
+    this._appendWindowSize();
   //  this._appendSystemDPI();
   //  this._appendColorDepth();
   //  this._appendInitialHistoryEvent();
   //  this._appendTimezoneOffset();
   //  this._attachListener();
     server.send();
-  }
+  },
+
+  _appendWindowSize : function() {
+    var width = $( this._element ).innerWidth();
+    var height = $( this._element ).innerHeight();
+    rap.getRemoteObject( this ).set( "bounds", [ 0, 0, width, height ] );
+  },
 
 };
 
 rwt.remote.HandlerRegistry.add( "rwt.widgets.Display", {
   factory : function( properties ) {
-    var display = rwt.widgets.Display.getCurrent()
-    display.initialize();
-    return display;
+    return rwt.widgets.Display.getCurrent();
   }
 } );
 

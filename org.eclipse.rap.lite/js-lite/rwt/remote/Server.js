@@ -23,6 +23,11 @@ rwt.remote.Server.prototype = {
     this._requestCounter = value;
   },
 
+
+  getRemoteObject : function( target ) {
+    return rwt.remote.RemoteObjectFactory.getRemoteObject( target );
+  },
+
   setUrl : function( value ) {
     this._url = value;
   },

@@ -33,6 +33,8 @@ public class RapLiteServlet extends HttpServlet {
     "rwt/remote/ObjectRegistry.js",
     "rwt/remote/MessageProcessor.js",
     "rwt/remote/MessageWriter.js",
+    "rwt/remote/RemoteObject.js",
+    "rwt/remote/RemoteObjectFactory.js",
     "rwt/widgets/Display.js",
     "rwt/widgets/Shell.js",
     "finalize.js"
