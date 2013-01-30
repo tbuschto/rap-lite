@@ -13,12 +13,3 @@ namespace = function( name ) { // cleaned up later
     parent[ part ] = {};
   }
 };
-
-rap.init = function( element, url ) {
-  $.get( url + "?lite=true", function( response ) {
-    rwt.widgets.Display.currentElement = element;
-    rwt.remote.MessageProcessor.processMessage( response );
-    delete rwt.widgets.Display.currentElement;
-  } );
-
-};

@@ -22,6 +22,7 @@ public class RapLiteApplicationConfiguration implements ApplicationConfiguration
     HttpService httpService = bc.getService( reference );
     try {
       httpService.registerServlet( "/lite", new RapLiteServlet(), null, null );
+      httpService.registerServlet( "/full", new RedirectServlet(), null, null );
     } catch( Throwable e ) {
       e.printStackTrace();
       // find a cleaner way to register

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.eclipse.rap.rwt.internal.service.UISessionImpl;
 import org.eclipse.swt.widgets.Display;
 
 
@@ -24,11 +25,14 @@ public class RapLiteServlet extends HttpServlet {
     "jquery-1.9.0.min.js",
     "underscore-1.4.4.min.js",
     "backbone-0.9.10.min.js",
-    "rap.js",
     "bootstrap.js",
-    "rwt/widgets/Display.js",
+    "rap.js",
     "rwt/remote/Server.js",
+    "rwt/remote/HandlerRegistry.js",
+    "rwt/remote/ObjectRegistry.js",
     "rwt/remote/MessageProcessor.js",
+    "rwt/remote/MessageWriter.js",
+    "rwt/widgets/Display.js",
     "finalize.js"
   };
 
@@ -41,11 +45,22 @@ public class RapLiteServlet extends HttpServlet {
   {
     String path = req.getPathInfo();
     if( path == null ) {
-      deliverHTML( resp );
+      deliverHTML( req, resp );
+    } else if( path.equals( "/full" ) ) {
+      startFullApplication( req, resp );
     } else if( path.equals( "/rap-lite.js" ) ) {
       deliverJavaScriptLoader( req, resp );
-    } else {
+    } else if( !path.endsWith( ".map" ) ) { // source mapping feature used jquery & chrome
       deliverResource( req, resp );
+    }
+  }
+
+  private void startFullApplication( HttpServletRequest req, HttpServletResponse resp ) {
+    req.getSession().invalidate(); // prevent application from continue using RapLiteClient
+    try {
+      resp.sendRedirect( "/application" );
+    } catch( IOException e ) {
+      e.printStackTrace();
     }
   }
 
@@ -101,7 +116,12 @@ public class RapLiteServlet extends HttpServlet {
     }
   }
 
-  private static void deliverHTML( HttpServletResponse resp ) {
+  @SuppressWarnings("restriction")
+  private static void deliverHTML(  HttpServletRequest req, HttpServletResponse resp ) {
+    UISessionImpl uiSession = UISessionImpl.getInstanceFromSession( req.getSession() );
+    if( uiSession != null && !( uiSession.getClient() instanceof RapLiteClient ) ) {
+      req.getSession().invalidate();
+    }
     String path = "html/index.html";
     ClassLoader loader = RapLiteServlet.class.getClassLoader();
     InputStream stream = loader.getResourceAsStream( path );
