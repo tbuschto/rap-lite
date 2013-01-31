@@ -13,7 +13,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.eclipse.rap.rwt.RWT;
+import org.eclipse.rap.rwt.internal.application.ApplicationContextImpl;
 import org.eclipse.rap.rwt.internal.service.UISessionImpl;
+import org.eclipse.rap.rwt.internal.theme.Theme;
+import org.eclipse.rap.rwt.internal.theme.ThemeCssValuesMap;
+import org.eclipse.rap.rwt.internal.theme.css.ConditionalValue;
 import org.eclipse.swt.widgets.Display;
 
 
@@ -52,6 +57,8 @@ public class RapLiteServlet extends HttpServlet {
       deliverHTML( req, resp );
     } else if( path.equals( "/full" ) ) {
       startFullApplication( req, resp );
+    } else if( path.startsWith( "/theme" ) ) {
+      deliverTheme( req, resp );
     } else if( path.equals( "/rap-lite.js" ) ) {
       deliverJavaScriptLoader( req, resp );
     } else if( !path.endsWith( ".map" ) ) { // source mapping feature used jquery & chrome
@@ -118,6 +125,39 @@ public class RapLiteServlet extends HttpServlet {
     } else {
       System.out.println( "Request failed:" + req.getRequestURL() );
     }
+  }
+
+  @SuppressWarnings({
+    "unused", "restriction"
+  })
+  private static void deliverTheme( HttpServletRequest req, HttpServletResponse resp ) {
+    UISessionImpl uiSession = UISessionImpl.getInstanceFromSession( req.getSession() );
+    final String themeId = RWT.DEFAULT_THEME_ID;
+    if( uiSession != null ) {
+      uiSession.exec( new Runnable() {
+        @Override
+        public void run() {
+          ApplicationContextImpl context = ( ApplicationContextImpl )RWT.getApplicationContext();
+          Theme theme = context.getThemeManager().getTheme( themeId );
+          ThemeCssValuesMap sheet = theme.getValuesMap();
+          ConditionalValue[] values = sheet.getValues( "Button", "background-color" );
+          for( ConditionalValue value : values ) {
+            System.out.println( join( value.constraints ) );
+            System.out.println( value.value.toDefaultString() );
+          }
+        }
+      } );
+    } else {
+      System.out.println( "No session - no theme" );
+    }
+  }
+
+  private static String join( String[] strings ) {
+    StringBuilder result = new StringBuilder();
+    for( String string : strings ) {
+      result.append( string );
+    }
+    return result.toString();
   }
 
   @SuppressWarnings("restriction")
