@@ -6,7 +6,7 @@ namespace( "rwt.widgets" );
 var server = rwt.remote.Server.getInstance();
 
 rwt.widgets.Display = function( element ) {
-  this._element = element;
+  this.el = element;
   rwt.widgets.Display._current = this;
 };
 
@@ -32,8 +32,8 @@ rwt.widgets.Display.prototype = {
   },
 
   _appendWindowSize : function() {
-    var width = $( this._element ).innerWidth();
-    var height = $( this._element ).innerHeight();
+    var width = $( this.el ).innerWidth();
+    var height = $( this.el ).innerHeight();
     rap.getRemoteObject( this ).set( "bounds", [ 0, 0, width, height ] );
   },
 
