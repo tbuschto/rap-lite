@@ -15,28 +15,15 @@ rap.init = function( element, url ) {
 // widget is given special treatment by MessageProcessor
 rwt.widgets.base.Widget = function() {};
 
-// make MessageProcessor backbone firendly:
-rwt.remote.MessageProcessor._processSetImpl = function( targetObject, handler, properties ) {
-  if( properties && handler.properties instanceof Array ) {
-    for( var i = 0; i < handler.properties.length; i++ ) {
-      var property = handler.properties [ i ];
-      var value = properties[ property ];
-      if( value !== undefined ) {
-        if( handler.propertyHandler && handler.propertyHandler[ property ] ) {
-          handler.propertyHandler[ property ].call( window, targetObject, value );
-        } else {
-          var setterName = this._getSetterName( property );
-          if( targetObject[ setterName ] ) {
-            targetObject[ setterName ]( value );
-          } else {
-            // new for RapLite:
-            targetObject.set( property, value );
-          }
-        }
-      }
-    }
+// make MessageProcessor backbone firendly: // todo :wrap original, use set( properties )
+var orgSet = rwt.remote.MessageProcessor._processSetImpl;
+var backboneSet = function( func, targetObject, handler, properties ) {
+  func.apply( this, targetObject, handler, properties );
+  if( targetObject.set ) {
+    targetObject.set( properties );
   }
 };
+rwt.remote.MessageProcessor._processSetImpl = _.wrap( orgSet, backboneSet );
 
 // Type Handler stubs:
 var dummyTypeHandler = {
