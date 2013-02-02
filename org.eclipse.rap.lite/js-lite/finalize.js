@@ -34,7 +34,6 @@ var dummyServiceHandler = {
   service : true
 };
 var HandlerRegistry = rwt.remote.HandlerRegistry;
-HandlerRegistry.add( "rwt.widgets.Label", dummyTypeHandler );
 HandlerRegistry.add( "rwt.widgets.Button", dummyTypeHandler );
 HandlerRegistry.add( "rwt.theme.ThemeStore", dummyServiceHandler );
 HandlerRegistry.add( "rwt.client.TextSizeMeasurement", dummyServiceHandler );

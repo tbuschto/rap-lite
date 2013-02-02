@@ -22,11 +22,12 @@ import org.eclipse.rap.rwt.internal.theme.css.ConditionalValue;
 import org.eclipse.swt.widgets.Display;
 
 
+@SuppressWarnings("restriction")
 public class RapLiteServlet extends HttpServlet {
 
   private final String PATH = "/lite/";
 
-  private String[] FILES = new String[]{
+  private static String[] SCRIPTS = new String[]{
     "jquery-1.9.0.min.js",
     "underscore-1.4.4.min.js",
     "backbone-0.9.10.min.js",
@@ -40,8 +41,14 @@ public class RapLiteServlet extends HttpServlet {
     "rwt/remote/MessageWriter.js",
     "rwt/remote/RemoteObject.js",
     "rwt/remote/RemoteObjectFactory.js",
+    "rwt/views/WidgetView.js",
+    "rwt/views/ShellView.js",
+    "rwt/views/LabelView.js",
+    "rwt/models/ShellModel.js",
+    "rwt/models/LabelModel.js",
     "rwt/widgets/Display.js",
     "rwt/widgets/Shell.js",
+    "rwt/widgets/Label.js",
     "finalize.js"
   };
 
@@ -90,14 +97,16 @@ public class RapLiteServlet extends HttpServlet {
     if( loaderScript == null ) {
       StringBuffer buffer = new StringBuffer();
       buffer.append( "(function(){\n" );
-      buffer.append( "var files = [\n" );
-      for( String file : FILES ) {
+      buffer.append( "var scripts = [\n" );
+      for( String file : SCRIPTS ) {
         buffer.append( "  \"" + PATH + file + "\",\n" );
       }
       buffer.append( "];\n" );
-      buffer.append( "for( var i = 0; i < files.length; i++ ) {\n" );
+      buffer.append( "document.write( \"<link type=\\\"text/css\\\" rel=\\\"stylesheet\\\"" );
+      buffer.append( "href=\\\"" + PATH + "rap-lite.css" + "\\\"></link>\" );\n" );
+      buffer.append( "for( var i = 0; i < scripts.length; i++ ) {\n" );
       buffer.append( "  document.write( \"<script type=\\\"text/javascript\\\" " );
-      buffer.append( "src=\\\"\" + files[ i ] + \"\\\"></script>\" );\n" );
+      buffer.append( "src=\\\"\" + scripts[ i ] + \"\\\"></script>\" );\n" );
       buffer.append( "}\n" );
       buffer.append( "}());\n" );
       loaderScript = buffer.toString();
@@ -127,9 +136,6 @@ public class RapLiteServlet extends HttpServlet {
     }
   }
 
-  @SuppressWarnings({
-    "unused", "restriction"
-  })
   private static void deliverTheme( HttpServletRequest req, HttpServletResponse resp ) {
     UISessionImpl uiSession = UISessionImpl.getInstanceFromSession( req.getSession() );
     final String themeId = RWT.DEFAULT_THEME_ID;
@@ -160,7 +166,6 @@ public class RapLiteServlet extends HttpServlet {
     return result.toString();
   }
 
-  @SuppressWarnings("restriction")
   private static void deliverHTML(  HttpServletRequest req, HttpServletResponse resp ) {
     UISessionImpl uiSession = UISessionImpl.getInstanceFromSession( req.getSession() );
     if( uiSession != null && !( uiSession.getClient() instanceof RapLiteClient ) ) {

@@ -1,48 +1,49 @@
-namespace( "rwt.widgets" );
-
 (function(){
-'use strict';
+  'use strict';
 
-var server = rwt.remote.Server.getInstance();
+  namespace( "rwt.widgets" );
 
-rwt.widgets.Display = function( element ) {
-  this.el = element;
-  rwt.widgets.Display._current = this;
-};
+  var server = rwt.remote.Server.getInstance();
 
-rwt.widgets.Display.getCurrent = function() {
-  return this._current;
-};
+  rwt.remote.HandlerRegistry.add( "rwt.widgets.Display", {
+    factory : function( properties ) {
+      return rwt.widgets.Display.getCurrent();
+    }
+  } );
 
-rwt.widgets.Display.prototype = {
+  rwt.widgets.Display = function( element ) {
+    this.el = element;
+    $( this.el ).addClass( "rap-display" );
+    rwt.widgets.Display._current = this;
+  };
 
-  applyObjectId : function() {
-    this.initialize();
-  },
+  rwt.widgets.Display.getCurrent = function() {
+    return this._current;
+  };
 
-  initialize : function() {
-    server.getMessageWriter().appendHead( "rwt_initialize", true );
-    this._appendWindowSize();
-  //  this._appendSystemDPI();
-  //  this._appendColorDepth();
-  //  this._appendInitialHistoryEvent();
-  //  this._appendTimezoneOffset();
-  //  this._attachListener();
-    server.send();
-  },
+  rwt.widgets.Display.prototype = {
 
-  _appendWindowSize : function() {
-    var width = $( this.el ).innerWidth();
-    var height = $( this.el ).innerHeight();
-    rap.getRemoteObject( this ).set( "bounds", [ 0, 0, width, height ] );
-  },
+    applyObjectId : function() {
+      this.initialize();
+    },
 
-};
+    initialize : function() {
+      server.getMessageWriter().appendHead( "rwt_initialize", true );
+      this._appendWindowSize();
+    //  this._appendSystemDPI();
+    //  this._appendColorDepth();
+    //  this._appendInitialHistoryEvent();
+    //  this._appendTimezoneOffset();
+    //  this._attachListener();
+      server.send();
+    },
 
-rwt.remote.HandlerRegistry.add( "rwt.widgets.Display", {
-  factory : function( properties ) {
-    return rwt.widgets.Display.getCurrent();
-  }
-} );
+    _appendWindowSize : function() {
+      var width = $( this.el ).innerWidth();
+      var height = $( this.el ).innerHeight();
+      rap.getRemoteObject( this ).set( "bounds", [ 0, 0, width, height ] );
+    },
+
+  };
 
 }());
