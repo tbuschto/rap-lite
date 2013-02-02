@@ -1,10 +1,10 @@
 rwt.remote.HandlerRegistry.add( "rwt.widgets.Label", {
 
   factory : function( properties ) {
-    var model = new rwt.models.Label(
+    var model = new rwt.models.LabelModel(
       _.pick( properties, [ "parent", "styles" ] )
     );
-    var view = new rwt.views.Label( {
+    var view = new rwt.views.LabelView( {
       "model" : model
     } );
     model.view = view;

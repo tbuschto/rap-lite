@@ -1,6 +1,6 @@
 namespace( "rwt.views" );
 
-rwt.views.Shell = rwt.views.Widget.extend( {
+rwt.views.ShellView = rwt.views.ControlView.extend( {
 
   name : "Shell",
 

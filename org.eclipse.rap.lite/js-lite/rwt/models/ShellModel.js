@@ -1,3 +1,3 @@
 namespace( "rwt.models" );
 
-rwt.models.Shell = Backbone.Model;
+rwt.models.ShellModel = Backbone.Model;

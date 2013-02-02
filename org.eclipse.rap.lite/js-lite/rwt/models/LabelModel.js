@@ -1,3 +1,3 @@
 namespace( "rwt.models" );
 
-rwt.models.Label = Backbone.Model;
+rwt.models.LabelModel = Backbone.Model;

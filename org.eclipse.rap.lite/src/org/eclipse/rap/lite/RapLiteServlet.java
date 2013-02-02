@@ -41,7 +41,7 @@ public class RapLiteServlet extends HttpServlet {
     "rwt/remote/MessageWriter.js",
     "rwt/remote/RemoteObject.js",
     "rwt/remote/RemoteObjectFactory.js",
-    "rwt/views/WidgetView.js",
+    "rwt/views/ControlView.js",
     "rwt/views/ShellView.js",
     "rwt/views/LabelView.js",
     "rwt/models/ShellModel.js",
@@ -115,8 +115,12 @@ public class RapLiteServlet extends HttpServlet {
   }
 
   private void deliverResource( HttpServletRequest req, HttpServletResponse resp ) {
-    resp.setContentType( "text/javascript" );
     String file = req.getPathInfo();
+    if( file.endsWith( ".css" ) ) {
+      resp.setContentType( "text/css" );
+    } else {
+      resp.setContentType( "text/javascript" );
+    }
     ClassLoader loader = RapLiteServlet.class.getClassLoader();
     InputStream stream = loader.getResourceAsStream( "js-lite/" + file );
     if( stream == null ) {

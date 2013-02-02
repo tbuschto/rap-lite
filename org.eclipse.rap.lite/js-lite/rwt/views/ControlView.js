@@ -3,9 +3,9 @@
 
   namespace( "rwt.views" );
 
-  rwt.views.Widget = Backbone.View.extend( {
+  rwt.views.ControlView = Backbone.View.extend( {
 
-    name : "Widget",
+    name : "Control",
 
     className : function() {
       var result = [];
@@ -20,13 +20,24 @@
     },
 
     initialize : function() {
+      this.initializeControl();
+    },
+
+    initializeControl : function() {
       this.applyParent();
+      this.model.on( "change", this.render, this );
       this.model.on( "change:bounds", this.renderBounds, this );
     },
 
+    render : function() {
+      this.renderChanges( this.model.changedAttributes() );
+    },
+
+    renderChanges : function() {},
+
     applyParent : function() {
-      var parent = rap.getObject( this.model.get( "parent" ) );
-      this.$el.appendTo( parent.view.$el );
+      var parent = rap.getObject( this.model.get( "parent" ) ).view;
+      parent.append( this );
     },
 
     renderBounds : function( model, bounds ) {
@@ -36,6 +47,14 @@
         "width" : bounds[ 2 ],
         "height" : bounds[ 3 ]
       } );
+    },
+
+    append : function( child ) {
+      if( child instanceof Backbone.View ) {
+        this.$el.append( child.$el );
+      } else {
+        this.$el.append( child );
+      }
     }
 
   } );

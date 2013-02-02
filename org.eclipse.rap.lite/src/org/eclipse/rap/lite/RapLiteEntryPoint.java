@@ -12,7 +12,7 @@ public class RapLiteEntryPoint extends AbstractEntryPoint {
 
   @Override
   protected void createContents( Composite parent ) {
-    Label label = new Label( parent, SWT.NONE );
+    Label label = new Label( parent, SWT.WRAP );
     label.setText( "Using " + RWT.getClient().getClass().getCanonicalName() );
     Button button = new Button( parent, SWT.PUSH );
     button.setText( "This is a button" );

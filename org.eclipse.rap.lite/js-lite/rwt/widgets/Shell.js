@@ -1,8 +1,8 @@
 rwt.remote.HandlerRegistry.add( "rwt.widgets.Shell", {
 
   factory : function( properties ) {
-    var model = new rwt.models.Shell();
-    var view = new rwt.views.Shell( {
+    var model = new rwt.models.ShellModel();
+    var view = new rwt.views.ShellView( {
       "model" : model
     } );
     model.view = view;
