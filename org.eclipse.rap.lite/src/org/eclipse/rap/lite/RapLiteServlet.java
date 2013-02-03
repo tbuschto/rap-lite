@@ -64,6 +64,8 @@ public class RapLiteServlet extends HttpServlet {
       deliverHTML( req, resp );
     } else if( path.equals( "/full" ) ) {
       startFullApplication( req, resp );
+    } else if( path.equals( "/gradient.svg" ) ) {
+      SvgGenerator.deliverGradient( req, resp );
     } else if( path.startsWith( "/theme" ) ) {
       deliverTheme( req, resp );
     } else if( path.equals( "/rap-lite.js" ) ) {
