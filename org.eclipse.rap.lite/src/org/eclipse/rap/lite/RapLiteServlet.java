@@ -44,11 +44,11 @@ public class RapLiteServlet extends HttpServlet {
     "rwt/views/ControlView.js",
     "rwt/views/ShellView.js",
     "rwt/views/LabelView.js",
-    "rwt/models/ShellModel.js",
-    "rwt/models/LabelModel.js",
+    "rwt/views/ButtonView.js",
     "rwt/widgets/Display.js",
     "rwt/widgets/Shell.js",
     "rwt/widgets/Label.js",
+    "rwt/widgets/Button.js",
     "finalize.js"
   };
 
@@ -141,6 +141,7 @@ public class RapLiteServlet extends HttpServlet {
   }
 
   private static void deliverTheme( HttpServletRequest req, HttpServletResponse resp ) {
+    // TODO : Do this on the client!
     UISessionImpl uiSession = UISessionImpl.getInstanceFromSession( req.getSession() );
     final String themeId = RWT.DEFAULT_THEME_ID;
     if( uiSession != null ) {

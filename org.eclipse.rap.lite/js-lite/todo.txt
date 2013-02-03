@@ -1,0 +1,15 @@
+Move models back to widgets NS
+use templates for simple widgets
+create server side svg gradient generator
+create client theme re-writer, e.g. add icon dimensions, pre-fixes, prefixfree, svg-grad
+create "native" theme (write native element measuerer)
+create client side theme switcher (rap.init options object)
+create view manager with accept method
+support colored gradient-buttons
+use slim scroll where supported
+
+support label, all buttons, perhaps text list and combo
+support TextSizeMeasurment and clientscripting
+support all control properties
+
+handle 404, destroy...

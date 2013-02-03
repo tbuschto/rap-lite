@@ -3,15 +3,15 @@
 
   namespace( "rwt.widgets" );
 
-  rwt.widgets.Label = Backbone.Model;
+  rwt.widgets.Button = Backbone.Model;
 
-  rwt.remote.HandlerRegistry.add( "rwt.widgets.Label", {
+  rwt.remote.HandlerRegistry.add( "rwt.widgets.Button", {
 
     factory : function( properties ) {
-      var model = new rwt.widgets.Label(
+      var model = new rwt.widgets.Button(
         _.pick( properties, [ "parent", "styles" ] )
       );
-      var view = new rwt.views.LabelView( {
+      var view = new rwt.views.ButtonView( {
         "model" : model
       } );
       model.view = view;
