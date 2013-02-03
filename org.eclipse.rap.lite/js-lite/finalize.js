@@ -3,6 +3,8 @@
 
 namespace( "rwt.widgets.base" );
 delete window.namespace;
+// widget is given special treatment by MessageProcessor
+rwt.widgets.base.Widget = function() {};
 
 // method to start a ui session within an html element
 rap.init = function( element, url ) {
@@ -12,18 +14,15 @@ rap.init = function( element, url ) {
   } );
 };
 
-// widget is given special treatment by MessageProcessor
-rwt.widgets.base.Widget = function() {};
-
-// make MessageProcessor backbone firendly: // todo :wrap original, use set( properties )
 var orgSet = rwt.remote.MessageProcessor._processSetImpl;
-var backboneSet = function( func, targetObject, handler, properties ) {
-  func.apply( this, targetObject, handler, properties );
-  if( targetObject.set ) {
-    targetObject.set( properties );
+
+rwt.remote.MessageProcessor._processSetImpl = function( targetObject, handler, properties ) {
+  if( targetObject instanceof Backbone.Model ) {
+    targetObject.set( targetObject.parse( _.pick( properties, handler.properties ) ) ) ;
+  } else {
+    orgSet.apply( this, targetObject, handler, properties );
   }
 };
-rwt.remote.MessageProcessor._processSetImpl = _.wrap( orgSet, backboneSet );
 
 // Type Handler stubs:
 var dummyTypeHandler = {

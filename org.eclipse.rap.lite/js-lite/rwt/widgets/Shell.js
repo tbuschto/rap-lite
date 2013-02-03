@@ -3,12 +3,15 @@
 
   namespace( "rwt.widgets" );
 
-  rwt.widgets.Shell = Backbone.Model;
+  rwt.widgets.Shell = rwt.widgets.Control.extend( {} );
 
   rwt.remote.HandlerRegistry.add( "rwt.widgets.Shell", {
 
     factory : function( properties ) {
-      var model = new rwt.widgets.Shell();
+      var model = new rwt.widgets.Shell(
+        _.pick( properties, [ "parent", "style" ] ),
+        { parse : true }
+      );
       var view = new rwt.views.ShellView( {
         "model" : model
       } );
@@ -16,7 +19,9 @@
       return model;
     },
 
-    isPublic : true
+    isPublic : true,
+
+    properties : [ "bounds" ]
 
   } );
 

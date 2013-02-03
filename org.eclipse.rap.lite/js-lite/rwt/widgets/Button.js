@@ -3,22 +3,34 @@
 
   namespace( "rwt.widgets" );
 
-  rwt.widgets.Button = Backbone.Model;
+  rwt.widgets.Button = rwt.widgets.Control.extend( {
+
+    select : function() {
+      if( !this.style.PUSH ) {
+        this.set( "selection", !this.get( "selection" ) );
+      }
+      this.trigger( "Selection" );
+    }
+
+  } );
 
   rwt.remote.HandlerRegistry.add( "rwt.widgets.Button", {
 
     factory : function( properties ) {
       var model = new rwt.widgets.Button(
-        _.pick( properties, [ "parent", "styles" ] )
+        _.pick( properties, [ "parent", "style" ] ),
+        { parse : true }
       );
-      var view = new rwt.views.ButtonView( {
-        "model" : model
-      } );
-      model.view = view;
+      model.view = new rwt.views.ButtonView( { "model" : model } );
+      new rwt.synchronizer.SelectionSynchronizer( model );
       return model;
     },
 
-    isPublic : true
+    isPublic : true,
+
+    properties : [ "bounds", "text" ],
+
+    events : [ "Selection" ]
 
   } );
 

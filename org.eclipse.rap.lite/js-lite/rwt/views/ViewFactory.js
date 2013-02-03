@@ -1,0 +1,5 @@
+addprovider {
+  accept
+  type
+  factory
+}
