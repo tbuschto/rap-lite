@@ -13,7 +13,7 @@
 
   rwt.widgets.Display = function( element ) {
     this.el = element;
-    $( this.el ).addClass( "rap-display" );
+    $( this.el ).addClass( rwt.theme.StyleUtil.DISPLAY_CLASS );
     rwt.widgets.Display._current = this;
   };
 

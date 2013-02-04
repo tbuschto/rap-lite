@@ -33,7 +33,6 @@ var dummyServiceHandler = {
   service : true
 };
 var HandlerRegistry = rwt.remote.HandlerRegistry;
-HandlerRegistry.add( "rwt.theme.ThemeStore", dummyServiceHandler );
 HandlerRegistry.add( "rwt.client.TextSizeMeasurement", dummyServiceHandler );
 
 }());

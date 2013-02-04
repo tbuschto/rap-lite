@@ -12,5 +12,4 @@ rwt.views.LabelView = rwt.views.ControlView.extend( {
     this.$el.text( this.model.get( "text" ) );
   }
 
-
 } );

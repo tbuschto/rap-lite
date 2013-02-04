@@ -13,3 +13,5 @@ support TextSizeMeasurment and clientscripting
 support all control properties
 
 handle 404, destroy...
+
+free floating ("hijacked") shells
