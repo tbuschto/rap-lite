@@ -10,16 +10,29 @@
   rwt.theme.StyleSheet.prototype = {
 
     getRule : function( selector ) {
-      if( !this._rules[ selector ] ) {
-        this._rules[ selector ] = new rwt.theme.StyleRule( selector );
+      var selectorStr = rwt.theme.StyleUtil.createSelectorString( selector );
+      if( !this._rules[ selectorStr ] ) {
+        this._rules[ selectorStr ] = [ selector.concat(), new rwt.theme.StyleRule() ];
       }
-      return this._rules[ selector ];
+      return this._rules[ selectorStr ][ 1 ];
+    },
+
+    addRule : function( selector, rule ) {
+      var selectorStr = rwt.theme.StyleUtil.createSelectorString( selector );
+      if( this._rules[ selectorStr ] ) {
+        throw new Error( selectorStr + " is already defined" );
+      }
+      this._rules[ selectorStr ] = [ selector.concat(), rule ];
+    },
+
+    getRules : function() {
+      return _.values( this._rules );
     },
 
     render : function() {
       var sheet = [];
       for( var key in this._rules ) {
-        sheet.push( this._rules[ key ].toString() );
+        sheet.push( this._rules[ key ][ 1 ].toString( this._rules[ key ][ 0 ] ) );
       }
       var result = "\n" + sheet.join( "\n\n" ) + "\n";
       console.log( result );

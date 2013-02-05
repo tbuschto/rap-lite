@@ -11,7 +11,7 @@
     _valueParser : {
       "background-color" : function( value, theme ) {
         var rgb = theme.values.colors[ value ];
-        return "rgb( " + rgb.slice( 0, 3 ).join( "," ) + ")";
+        return "rgb(" + rgb.slice( 0, 3 ).join( "," ) + ")";
       }
     },
 
@@ -33,26 +33,30 @@
       var styleSheet = new rwt.theme.StyleSheet();
       var parser = this.getParser();
       for( var element in parser ) {
-        var widgetTheme = this._preParse( theme, element );
-        if( widgetTheme ) {
-          parser[ element ]( styleSheet, widgetTheme );
+        var widgetSheet = this._createWidgetSheet( theme, element );
+        if( widgetSheet ) {
+          var rules = widgetSheet.getRules();
+          for( var i = 0; i < rules.length; i++ ) {
+            parser[ element ]( styleSheet, rules[ i ][ 0 ], rules[ i ][ 1 ] );
+          }
         }
       }
       styleSheet.render();
     },
 
-    _preParse : function( theme, element ) {
+    _createWidgetSheet : function( theme, element ) {
       var result = null;
       var props = theme.theme[ element ];
       if( props ) {
-        result = {};
+        result = new rwt.theme.StyleSheet();
         for( var property in props ) {
           var conditionalValues = props[ property ];
           for( var i = 0; i < conditionalValues.length; i++ ) {
             var condValue = conditionalValues[ i ];
-            condValue[ 1 ] = this._parseValue( property, condValue[ 1 ], theme );
+            var selector = rwt.theme.StyleUtil.createSelectorArray( element, condValue[ 0 ] );
+            var value  = this._parseValue( property, condValue[ 1 ], theme );
+            result.getRule( selector ).set( property, value );
           }
-          result[ property ] = conditionalValues;
         }
       }
       return result;

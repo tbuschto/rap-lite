@@ -5,26 +5,19 @@
 
   var StyleUtil = rwt.theme.StyleUtil;
 
-  rwt.theme.StyleRule = function( selector ) {
-    this._properties = {};
-    this._selector = selector;
-  };
+  rwt.theme.StyleRule = Backbone.Model.extend( {
 
-  rwt.theme.StyleRule.prototype = {
-
-    setProperty : function( property, value ) {
-      this._properties[ property ] = value;
-    },
-
-    toString : function() {
-      var result = "." + StyleUtil.DISPLAY_CLASS + " " + this._selector + " {\n";
-      for( var property in this._properties ) {
-        result += "  " + property + ": " + this._properties[ property ] + ";\n"
+    toString : function( selector ) {
+      var prefixedSelector = [ "." + StyleUtil.DISPLAY_CLASS ].concat( selector );
+      var selectorStr = rwt.theme.StyleUtil.createSelectorString( prefixedSelector );
+      var result = [ selectorStr + " {\n" ];
+      for( var property in this.attributes ) {
+        result.push( "  ", property, ": ", this.get( property ), ";\n" );
       }
-      result += "}";
-      return result;
+      result.push( "}" );
+      return result.join( "" );
     }
 
-  };
+  } );
 
 }());

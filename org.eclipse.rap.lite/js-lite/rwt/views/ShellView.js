@@ -17,12 +17,8 @@
 
   rwt.views.ShellView.themeParser = {
 
-    "Shell" : function( styleSheet, widgetTheme ) {
-      var backgroundColors = widgetTheme[ "background-color" ];
-      for( var i = 0; i < backgroundColors.length; i++ ) {
-        var selector = [ ".Shell " ].concat( backgroundColors[ i ][ 0 ] );
-       styleSheet.getRule( selector.join( "" ) ).setProperty( "background-color", backgroundColors[ i ][ 1 ] );
-      }
+    "Shell" : function( styleSheet, selector, rule ) {
+      styleSheet.addRule( selector, rule );
     }
 
   };
