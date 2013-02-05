@@ -11,7 +11,7 @@
       var result = [];
       var proto = this.constructor.prototype;
       while( proto ) {
-        if( proto.name ) {
+        if( proto.name ) { // TODO : needs to be own property
           result.push( proto.name );
         }
         proto = proto.constructor ? proto.constructor.__super__ : null;
@@ -25,6 +25,7 @@
 
     initializeControl : function() {
       this.applyParent();
+      this.applyCssClasses();
       this.model.on( "change", this.render, this );
       this.model.on( "change:bounds", this.renderBounds, this );
     },
@@ -47,6 +48,12 @@
         "width" : bounds[ 2 ],
         "height" : bounds[ 3 ]
       } );
+    },
+
+    applyCssClasses : function() {
+      for( var style in this.model.style ) {
+        this.$el.addClass( style );
+      }
     },
 
     append : function( child ) {

@@ -3,6 +3,11 @@
 
   namespace( "rwt.theme" );
 
+
+  /**
+   * Since the order of the original StyleSheet/conditional values is not preserved,
+   * it's theoretically possible for the behavior to be different here than for the WebClient
+   */
   rwt.theme.StyleSheet = function() {
     this._rules = {};
   };

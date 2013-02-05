@@ -14,3 +14,7 @@
   position: absolute;
   overflow: hidden;
 }
+
+.rap-display .Button {
+  white-space: nowrap /* TODO: move to view theme parser*/;
+}

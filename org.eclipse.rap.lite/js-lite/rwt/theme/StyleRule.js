@@ -12,7 +12,8 @@
       var selectorStr = rwt.theme.StyleUtil.createSelectorString( prefixedSelector );
       var result = [ selectorStr + " {\n" ];
       for( var property in this.attributes ) {
-        result.push( "  ", property, ": ", this.get( property ), ";\n" );
+        result.push( "  ", property, ": " );
+        result.push( StyleUtil.toCssString( property, this.get( property ) ), ";\n" );
       }
       result.push( "}" );
       return result.join( "" );

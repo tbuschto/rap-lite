@@ -7,12 +7,11 @@
 
     _parser : null,
 
-    // TODO: Make a class:
-    _valueParser : {
-      "background-color" : function( value, theme ) {
-        var rgb = theme.values.colors[ value ];
-        return "rgb(" + rgb.slice( 0, 3 ).join( "," ) + ")";
-      }
+    _valueMapping : {
+      "background-color" : "colors",
+      "border" : "borders",
+      "padding" : "boxdims",
+      "font" : "fonts"
     },
 
     getParser : function() {
@@ -54,7 +53,7 @@
           for( var i = 0; i < conditionalValues.length; i++ ) {
             var condValue = conditionalValues[ i ];
             var selector = rwt.theme.StyleUtil.createSelectorArray( element, condValue[ 0 ] );
-            var value  = this._parseValue( property, condValue[ 1 ], theme );
+            var value  = this._resolveValue( property, condValue[ 1 ], theme );
             result.getRule( selector ).set( property, value );
           }
         }
@@ -62,10 +61,10 @@
       return result;
     },
 
-    _parseValue : function( property, value, theme ) {
+    _resolveValue : function( property, value, theme ) {
       var result;
-      if( this._valueParser[ property ] ) {
-        result = this._valueParser[ property ]( value, theme );
+      if( this._valueMapping[ property ] ) {
+        result = theme.values[ this._valueMapping[ property ] ][ value ];
       } else {
         result = value;
       }
