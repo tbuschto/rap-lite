@@ -57,6 +57,15 @@
       return result;
     },
 
+    fixPropertyName : function( property ) {
+      var result = property;
+      var map = this._cssPropertyMapping[ rwt.client.Client.getEngine() ];
+      if( map && map[ property ] ) {
+        result = map[ property ];
+      }
+      return result;
+    },
+
     _cssStringCreator : {
       "background-color" : function( rgba ) {
         return "rgb(" + _.first( rgba, 3 ).join( "," ) + ")";
@@ -84,6 +93,15 @@
         result.push( font.size + "px" );
         result.push( "'" + font.family.join( "','" ) + "'" );
         return result.join( " " );
+      }
+    },
+
+    _cssPropertyMapping : {
+      "webkit" : {
+        "user-select" : "-webkit-user-select"
+      },
+      "gecko" : {
+        "user-select" : "-moz-user-select"
       }
     }
 

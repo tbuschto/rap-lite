@@ -66,4 +66,14 @@
 
   } );
 
+  rwt.views.ControlView.themeParser = {
+    "Control" : function( styleSheet ) {
+      var rule = styleSheet.getRule( ".Control" );
+      rule.set( {
+        "position" : "absolute",
+        "overflow" : "hidden"
+      } );
+    }
+  };
+
 }());

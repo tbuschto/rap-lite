@@ -11,7 +11,8 @@
       "background-color" : "colors",
       "border" : "borders",
       "padding" : "boxdims",
-      "font" : "fonts"
+      "font" : "fonts",
+      "cursor" : "cursors"
     },
 
     getParser : function() {
@@ -32,8 +33,9 @@
       var styleSheet = new rwt.theme.StyleSheet();
       var parser = this.getParser();
       for( var element in parser ) {
+        console.log( element );
         var widgetSheet = this._createWidgetSheet( theme, element );
-        parser[ element ]( styleSheet, widgetSheet.getRules() );
+        parser[ element ]( styleSheet, widgetSheet ? widgetSheet.getRules() : null );
       }
       styleSheet.render();
     },

@@ -9,8 +9,16 @@
 
     constructor : function( selector, attributes ) {
       Backbone.Model.apply( this, [ attributes ] );
-      this._selector = selector.concat();
-      this.selectorString = rwt.theme.StyleUtil.createSelectorString( selector );
+      if( _.isString( selector ) ) {
+        this._selector = [ {
+          "element" : selector,
+          "classes" : []
+        } ];
+        this.selectorString = selector;
+      } else {
+        this._selector = selector.concat();
+        this.selectorString = rwt.theme.StyleUtil.createSelectorString( selector );
+      }
     },
 
     getSelector : function() {
@@ -22,7 +30,7 @@
       var selectorStr = rwt.theme.StyleUtil.createSelectorString( prefixedSelector );
       var result = [ selectorStr + " {\n" ];
       for( var property in this.attributes ) {
-        result.push( "  ", property, ": " );
+        result.push( "  ", StyleUtil.fixPropertyName( property ), ": " );
         result.push( StyleUtil.toCssString( property, this.get( property ) ), ";\n" );
       }
       result.push( "}" );

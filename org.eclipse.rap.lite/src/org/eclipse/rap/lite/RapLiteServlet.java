@@ -34,6 +34,7 @@ public class RapLiteServlet extends HttpServlet {
     "bootstrap.js",
     "rap.js",
     "rwt/util/Strings.js",
+    "rwt/client/Client.js",
     "rwt/remote/Server.js",
     "rwt/remote/HandlerRegistry.js",
     "rwt/remote/ObjectRegistry.js",

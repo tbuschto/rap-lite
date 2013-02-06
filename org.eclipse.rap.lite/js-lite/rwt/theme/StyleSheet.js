@@ -15,7 +15,12 @@
   rwt.theme.StyleSheet.prototype = {
 
     getRule : function( selector ) {
-      var selectorStr = rwt.theme.StyleUtil.createSelectorString( selector );
+      var selectorStr;
+      if( _.isString( selector ) ) {
+        selectorStr = selector;
+      } else {
+        selectorStr = rwt.theme.StyleUtil.createSelectorString( selector );
+      }
       if( !this._rules[ selectorStr ] ) {
         this._rules[ selectorStr ] = new rwt.theme.StyleRule( selector );
       }
