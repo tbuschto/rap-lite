@@ -17,17 +17,17 @@
     getRule : function( selector ) {
       var selectorStr = rwt.theme.StyleUtil.createSelectorString( selector );
       if( !this._rules[ selectorStr ] ) {
-        this._rules[ selectorStr ] = [ selector.concat(), new rwt.theme.StyleRule() ];
+        this._rules[ selectorStr ] = new rwt.theme.StyleRule( selector );
       }
-      return this._rules[ selectorStr ][ 1 ];
+      return this._rules[ selectorStr ];
     },
 
-    addRule : function( selector, rule ) {
-      var selectorStr = rwt.theme.StyleUtil.createSelectorString( selector );
+    addRule : function( rule ) {
+      var selectorStr = rule.selectorString;
       if( this._rules[ selectorStr ] ) {
         throw new Error( selectorStr + " is already defined" );
       }
-      this._rules[ selectorStr ] = [ selector.concat(), rule ];
+      this._rules[ selectorStr ] = rule;
     },
 
     getRules : function() {
@@ -36,9 +36,11 @@
 
     render : function() {
       var sheet = [];
-      for( var key in this._rules ) {
-        sheet.push( this._rules[ key ][ 1 ].toString( this._rules[ key ][ 0 ] ) );
-      }
+      _.forEach( this._rules, function( rule ) {
+        if( _.size( rule.attributes ) > 0 ) {
+          sheet.push( rule.toString() );
+        }
+      } );
       var result = "\n" + sheet.join( "\n\n" ) + "\n";
       console.log( result );
 

@@ -21,10 +21,9 @@
 
   rwt.views.LabelView.themeParser = {
 
-    "Label" : function( styleSheet, selector, rule ) {
+    "Label" : function( styleSheet, rules ) {
       var supported = [ "background-color", "border", "padding", "font" ];
-      var attributes = _.pick( rule.attributes, supported );
-      styleSheet.getRule( selector ).set( attributes );
+      rwt.theme.StyleUtil.addRulesToSheet( styleSheet, rules, supported );
     }
 
   };

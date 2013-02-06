@@ -17,10 +17,9 @@
 
   rwt.views.ShellView.themeParser = {
 
-    "Shell" : function( styleSheet, selector, rule ) {
+    "Shell" : function( styleSheet, rules ) {
       var supported = [ "background-color", "border", "padding", "font" ];
-      var attributes = _.pick( rule.attributes, supported );
-      styleSheet.getRule( selector ).set( attributes );
+      rwt.theme.StyleUtil.addRulesToSheet( styleSheet, rules, supported );
     }
 
   };

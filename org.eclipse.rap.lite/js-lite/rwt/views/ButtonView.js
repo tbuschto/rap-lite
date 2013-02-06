@@ -29,10 +29,9 @@
 
   rwt.views.ButtonView.themeParser = {
 
-    "Button" : function( styleSheet, selector, rule ) { // TODO : call only once for all rules
+    "Button" : function( styleSheet, rules ) {
       var supported = [ "background-color", "border", "padding", "font" ];
-      var attributes = _.pick( rule.attributes, supported );
-      styleSheet.getRule( selector ).set( attributes );
+      rwt.theme.StyleUtil.addRulesToSheet( styleSheet, rules, supported );
     }
 
   };

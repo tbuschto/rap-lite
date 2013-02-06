@@ -5,16 +5,24 @@
 
   rwt.theme.StyleUtil = {
 
+    DISPLAY_SELECTOR : [ {
+      "element" : ".rap-display",
+      "classes" : []
+    } ],
+
     DISPLAY_CLASS : "rap-display",
 
     createSelectorArray : function( element, conditions ) {
-      var selectorItem = [ "." + element ];
+      var selectorItem = {
+        "element" : "." + element,
+        "classes" : []
+      };
       for( var i = 0; i < conditions.length; i++ ) {
         var condition = conditions[ i ];
         if( condition.charAt( 0 ) === "[" ) {
           condition = "." + condition.slice( 1 );
         }
-        selectorItem.push( condition );
+        selectorItem.classes.push( condition );
       }
       return [ selectorItem ];
     },
@@ -24,24 +32,21 @@
       if( selectorArr.length === 0 ) {
         throw new Error( "No items to select" );
       }
-      for( var i = 0; i < selectorArr.length; i++ ) {
-        if( selectorArr[ i ] instanceof Array ) {
-          var item = selectorArr[ i ].concat();
-          if( item.length === 0 ) {
-            throw new Error( "Item may not be empty" );
-          }
-          var element = [];
-          if( item[ 0 ].charAt( 0 ) !== "." && item[ 0 ].charAt( 0 ) !== ":" ) {
-            element.push( item.shift() ); // todo: find a way that identifies ".Widget" as element
-          }
-          var classes = item.sort();
-          item = element.concat( classes );
-          result.push( item.join( "" ) );
-        } else {
-          result.push( selectorArr[ i ] );
-        }
-      }
+      _.forEach( selectorArr, function( item ) {
+        //var item = item.concat();
+        var itemStr = item.element ? item.element  : "";
+        itemStr += item.classes.sort().join( "" );
+        result.push( itemStr );
+      } );
       return result.join( " " );
+    },
+
+    addRulesToSheet : function( styleSheet, rules, filter ) {
+      _.forEach( rules, function( rule ) {
+        var selector = rule.getSelector();
+        var newRule = new rwt.theme.StyleRule( selector, _.pick( rule.attributes, filter ) );
+        styleSheet.addRule( newRule );
+      } );
     },
 
     toCssString : function( property, value ) {

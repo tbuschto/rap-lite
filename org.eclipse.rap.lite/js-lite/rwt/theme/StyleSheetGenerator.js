@@ -33,12 +33,7 @@
       var parser = this.getParser();
       for( var element in parser ) {
         var widgetSheet = this._createWidgetSheet( theme, element );
-        if( widgetSheet ) {
-          var rules = widgetSheet.getRules();
-          for( var i = 0; i < rules.length; i++ ) {
-            parser[ element ]( styleSheet, rules[ i ][ 0 ], rules[ i ][ 1 ] );
-          }
-        }
+        parser[ element ]( styleSheet, widgetSheet.getRules() );
       }
       styleSheet.render();
     },
