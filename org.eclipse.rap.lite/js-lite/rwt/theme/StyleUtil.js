@@ -38,6 +38,9 @@
         if( condition.charAt( 0 ) === "[" ) {
           condition = "." + condition.slice( 1 );
         }
+        if( condition === ":pressed" ) {
+          condition = ":hover:active";
+        }
         selectorItem.classes.push( condition );
       }
       return [ selectorItem ];

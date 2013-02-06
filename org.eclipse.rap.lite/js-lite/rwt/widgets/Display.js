@@ -14,6 +14,7 @@
   rwt.widgets.Display = function( element ) {
     this.el = element;
     $( this.el ).addClass( rwt.theme.StyleUtil.DISPLAY_CLASS );
+    this._attachSelectionHandler();
     rwt.widgets.Display._current = this;
   };
 
@@ -43,6 +44,16 @@
       var height = $( this.el ).innerHeight();
       rap.getRemoteObject( this ).set( "bounds", [ 0, 0, width, height ] );
     },
+
+    _attachSelectionHandler : function() {
+      this.el.onselect = this._onSelection;
+      document.onselectstart = this._onSelection;
+      document.onselectionchange = this._onSelection;
+    },
+
+    _onSelection : function( event ) {
+      event.preventDefault();  // TODO : use jquery, make cross-browser
+    }
 
   };
 
