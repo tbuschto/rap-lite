@@ -12,6 +12,22 @@
 
     DISPLAY_CLASS : "rap-display",
 
+    BROWSER_PREFIX : ( function() {
+      var result;
+      switch( rwt.client.Client.getEngine() ) {
+        case "gecko":
+          result = "-moz-";
+        break;
+        case "webkit":
+          result = "-webkit-";
+        break;
+        default:
+          result = "";
+        break;
+      }
+      return result;
+    }() ),
+
     createSelectorArray : function( element, conditions ) {
       var selectorItem = {
         "element" : "." + element,
@@ -93,6 +109,15 @@
         result.push( font.size + "px" );
         result.push( "'" + font.family.join( "','" ) + "'" );
         return result.join( " " );
+      },
+      "background" : function( gradientObject ) {
+        var args = [ gradientObject.horizontal === true ? "0deg" : "-90deg" ];
+        for( var i = 0; i < gradientObject.colors.length; i++ ) {
+          var position = gradientObject.percents[ i ] + "%";
+          var color = gradientObject.colors[ i ];
+          args.push( color + " " + position );
+        }
+        return rwt.theme.StyleUtil.BROWSER_PREFIX + "linear-gradient( " + args.join() + ")";
       }
     },
 

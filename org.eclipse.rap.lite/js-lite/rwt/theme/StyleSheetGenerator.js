@@ -12,7 +12,8 @@
       "border" : "borders",
       "padding" : "boxdims",
       "font" : "fonts",
-      "cursor" : "cursors"
+      "cursor" : "cursors",
+      "background-gradient" : "gradients"
     },
 
     getParser : function() {
@@ -33,7 +34,6 @@
       var styleSheet = new rwt.theme.StyleSheet();
       var parser = this.getParser();
       for( var element in parser ) {
-        console.log( element );
         var widgetSheet = this._createWidgetSheet( theme, element );
         parser[ element ]( styleSheet, widgetSheet ? widgetSheet.getRules() : null );
       }
@@ -52,6 +52,12 @@
             var selector = rwt.theme.StyleUtil.createSelectorArray( element, condValue[ 0 ] );
             var value  = this._resolveValue( property, condValue[ 1 ], theme );
             result.getRule( selector ).set( property, value );
+            if( property === "background-image" ) {
+              value  = this._resolveValue( "background-gradient", condValue[ 1 ], theme );
+              if( value ) {
+                result.getRule( selector ).set( "background", value );
+              }
+            }
           }
         }
       }

@@ -30,7 +30,7 @@
   rwt.views.ButtonView.themeParser = {
 
     "Button" : function( styleSheet, rules ) {
-      var supported = [ "background-color", "border", "padding", "font", "cursor" ];
+      var supported = [ "background-color", "border", "padding", "font", "cursor", "background" ];
       rwt.theme.StyleUtil.addRulesToSheet( styleSheet, rules, supported );
       var sheet = styleSheet.getRule( ".Button" );
       sheet.set( {
