@@ -13,6 +13,7 @@
   rwt.synchronizer.SelectionSynchronizer.prototype = {
 
     onChangeSelection : function() {
+      rap.getRemoteObject( this.model ).set( "selection", this.model.get( "selection" ) );
     },
 
     onSelection : function() {
