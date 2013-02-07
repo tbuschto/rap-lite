@@ -8,6 +8,7 @@ import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
@@ -24,6 +25,7 @@ public class RapLiteEntryPoint extends AbstractEntryPoint {
     label.setLayoutData( new GridData( SWT.FILL, SWT.TOP, true, false ) );
     Button button = new Button( parent, SWT.PUSH );
     button.setText( "This is a button" );
+    button.setImage( Display.getCurrent().getSystemImage( SWT.ICON_INFORMATION ) );
     button.addListener( SWT.Selection, new Listener() {
       @Override
       public void handleEvent( Event event ) {
@@ -35,7 +37,7 @@ public class RapLiteEntryPoint extends AbstractEntryPoint {
 
       @Override
       public void controlResized( ControlEvent e ) {
-        System.out.println( getShell().getSize() );
+        getShell().layout();
       }
 
       @Override

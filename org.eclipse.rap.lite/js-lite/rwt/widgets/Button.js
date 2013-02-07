@@ -28,7 +28,7 @@
 
     isPublic : true,
 
-    properties : [ "bounds", "text" ],
+    properties : [ "bounds", "text", "image" ],
 
     events : [ "Selection" ]
 

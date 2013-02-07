@@ -5,10 +5,7 @@
 
   rwt.theme.StyleUtil = {
 
-    DISPLAY_SELECTOR : [ {
-      "element" : ".rap-display",
-      "classes" : []
-    } ],
+    DISPLAY_SELECTOR : [ ".rap-display" ],
 
     DISPLAY_CLASS : "rap-display",
 
@@ -52,10 +49,13 @@
         throw new Error( "No items to select" );
       }
       _.forEach( selectorArr, function( item ) {
-        //var item = item.concat();
-        var itemStr = item.element ? item.element  : "";
-        itemStr += item.classes.sort().join( "" );
-        result.push( itemStr );
+        if( _.isString( item ) ) {
+          result.push( item );
+        } else {
+          var itemStr = item.element ? item.element  : "";
+          itemStr += item.classes.sort().join( "" );
+          result.push( itemStr );
+        }
       } );
       return result.join( " " );
     },
@@ -100,6 +100,9 @@
       },
       "padding" : function( padding ) {
         return padding.join( "px " ) + "px";
+      },
+      "margin-right" : function( pixel ) {
+        return pixel + "px";
       },
       "font" : function( font ) {
         var result = [];

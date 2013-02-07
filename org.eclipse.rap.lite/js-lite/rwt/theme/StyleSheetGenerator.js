@@ -14,7 +14,8 @@
       "font" : "fonts",
       "cursor" : "cursors",
       "background-gradient" : "gradients",
-      "border-radius" : "boxdims"
+      "border-radius" : "boxdims",
+      "spacing" : "dimensions"
     },
 
     getParser : function() {
