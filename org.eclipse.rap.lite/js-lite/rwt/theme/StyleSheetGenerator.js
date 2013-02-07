@@ -13,7 +13,8 @@
       "padding" : "boxdims",
       "font" : "fonts",
       "cursor" : "cursors",
-      "background-gradient" : "gradients"
+      "background-gradient" : "gradients",
+      "border-radius" : "boxdims"
     },
 
     getParser : function() {

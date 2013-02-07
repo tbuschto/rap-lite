@@ -121,6 +121,9 @@
           args.push( color + " " + position );
         }
         return rwt.theme.StyleUtil.BROWSER_PREFIX + "linear-gradient( " + args.join() + ")";
+      },
+      "border-radius" : function( radii ) {
+        return radii.join( "px " ) + "px";
       }
     },
 
