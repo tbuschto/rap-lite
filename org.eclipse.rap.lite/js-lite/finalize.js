@@ -1,5 +1,5 @@
 (function(){
-'use strict';
+  'use strict';
 
   namespace( "rwt.widgets.base" );
   delete window.namespace;
@@ -23,16 +23,5 @@
       orgSet.apply( this, targetObject, handler, properties );
     }
   };
-
-  // Type Handler stubs:
-  var dummyTypeHandler = {
-    factory : function(){ return {}; }
-  };
-  var dummyServiceHandler = {
-    factory : function(){ return {}; },
-    service : true
-  };
-  var HandlerRegistry = rwt.remote.HandlerRegistry;
-  HandlerRegistry.add( "rwt.client.TextSizeMeasurement", dummyServiceHandler );
 
 }());

@@ -20,8 +20,8 @@ rwt = {
       // supports only static classes
       define : function( name, object ) {
         namespace( name, object.statics );
-        if( object.statics.__init ) {
-          object.statics.__init();
+        if( object.defer ) {
+          object.defer( object.statics );
         }
       }
     }
