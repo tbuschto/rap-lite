@@ -49,9 +49,9 @@
       _.forEach( rules, function( rule ) {
         var selector = rule.getSelector();
         var newRule = styleSheet.getRule( selector );
-        newRule.set(_.pick( rule.attributes, filter ) );
+        newRule.set( _.pick( rule.attributes, filter ) );
         if( rule.has( "spacing" ) ) {
-          var subSelector = selector.concat( [ ".subwidget" ] );
+          var subSelector = [ selector, ".subwidget" ];
           styleSheet.getRule( subSelector ).set( {
             "margin-right" : rule.get( "spacing" )
           } );
@@ -61,7 +61,6 @@
         "user-select" : "none",
         "white-space" : "nowrap"
       } );
-      // TODO : make own themes Button-...
       styleSheet.getRule( [ ".Button", ".subwidget" ] ).set( {
         "display" : "inline-block",
         "vertical-align" : "middle"

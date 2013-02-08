@@ -50,6 +50,7 @@ public class RapLiteServlet extends HttpServlet {
     "rwt/theme/StyleUtil.js",
     "rwt/theme/StyleSheet.js",
     "rwt/theme/StyleRule.js",
+    "rwt/theme/StyleSelectorItem.js",
     "rwt/theme/StyleSheetGenerator.js",
     "rwt/templates/IconTemplate.js",
     "rwt/templates/ImageTemplate.js",

@@ -10,23 +10,27 @@
     constructor : function( selector, attributes ) {
       Backbone.Model.apply( this, [ attributes ] );
       if( _.isString( selector ) ) {
-        this._selector = [ {
-          "element" : selector,
-          "classes" : []
-        } ];
+        this._selector = [ new rwt.theme.StyleSelectorItem( selector ) ];
         this.selectorString = selector;
-      } else {
+      } else if( _.isArray( selector ) ) {
         this._selector = selector.concat();
         this.selectorString = rwt.theme.StyleUtil.createSelectorString( selector );
+      } else {
+        this._selector = [ selector ];
+        this.selectorString = this._selector[ 0 ].toString();
       }
     },
 
     getSelector : function() {
-      return this._selector.concat();
+      if( this._selector.length === 1 ) {
+        return this._selector[ 0 ];
+      } else {
+        return this._selector.concat();
+      }
     },
 
     toString : function() {
-      var prefixedSelector = StyleUtil.DISPLAY_SELECTOR.concat( this._selector );
+      var prefixedSelector = [ StyleUtil.DISPLAY_SELECTOR ].concat( this._selector );
       var selectorStr = rwt.theme.StyleUtil.createSelectorString( prefixedSelector );
       var result = [ selectorStr + " {\n" ];
       for( var property in this.attributes ) {

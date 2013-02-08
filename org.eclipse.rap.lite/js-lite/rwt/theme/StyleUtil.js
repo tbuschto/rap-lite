@@ -5,7 +5,7 @@
 
   rwt.theme.StyleUtil = {
 
-    DISPLAY_SELECTOR : [ ".rap-display" ],
+    DISPLAY_SELECTOR : ".rap-display",
 
     DISPLAY_CLASS : "rap-display",
 
@@ -25,37 +25,14 @@
       return result;
     }() ),
 
-    createSelectorArray : function( element, conditions ) {
-      var selectorItem = {
-        "element" : "." + element,
-        "classes" : []
-      };
-      for( var i = 0; i < conditions.length; i++ ) {
-        var condition = conditions[ i ];
-        if( condition.charAt( 0 ) === "[" ) {
-          condition = "." + condition.slice( 1 );
-        }
-        if( condition === ":pressed" ) {
-          condition = ":hover:active";
-        }
-        selectorItem.classes.push( condition );
-      }
-      return [ selectorItem ];
-    },
-
-    createSelectorString : function( selectorArr ) {
+    createSelectorString : function( arg ) {
       var result = [];
-      if( selectorArr.length === 0 ) {
+      var items = !_.isArray( arg ) ? [ arg ] : arg;
+      if( items.length === 0 ) {
         throw new Error( "No items to select" );
       }
-      _.forEach( selectorArr, function( item ) {
-        if( _.isString( item ) ) {
-          result.push( item );
-        } else {
-          var itemStr = item.element ? item.element  : "";
-          itemStr += item.classes.sort().join( "" );
-          result.push( itemStr );
-        }
+      _.forEach( items, function( item ) {
+        result.push( item.toString() );
       } );
       return result.join( " " );
     },
