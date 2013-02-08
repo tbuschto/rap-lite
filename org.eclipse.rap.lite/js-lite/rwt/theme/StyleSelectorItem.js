@@ -47,15 +47,21 @@
     var classes = [];
     for( var i = 0; i < conditions.length; i++ ) {
       var condition = conditions[ i ];
-      if( condition.charAt( 0 ) === "[" ) {
-        condition = "." + condition.slice( 1 );
-      }
-      if( condition === ":pressed" ) {
-        condition = ":hover:active";
+      if( conditionToClass[ condition ] ) {
+        condition = conditionToClass[ condition ];
+      } else {
+        var firstChar = condition.charAt( 0 );
+        if( firstChar === "[" || firstChar === ":" ) {
+          condition = "." + condition.slice( 1 );
+        }
       }
       classes.push( condition );
     }
     return new rwt.theme.StyleSelectorItem( "." + element, classes );
+  };
+
+  var conditionToClass = {
+    ":pressed" : ":hover:active"
   };
 
 

@@ -18,6 +18,9 @@
 
     initializeControl : function() {
       this.style = this.get( "style" );
+      if( this.defaults ) {
+        this.set( this.defaults );
+      }
     }
 
   } );

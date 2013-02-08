@@ -5,6 +5,11 @@
 
   rwt.widgets.Button = rwt.widgets.Control.extend( {
 
+    defaults
+     : {
+      "selection" : false
+    },
+
     select : function() {
       if( !this.style.PUSH ) {
         this.set( "selection", !this.get( "selection" ) );

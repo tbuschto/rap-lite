@@ -42,7 +42,7 @@
     render : function() {
       var sheet = [];
       _.forEach( this._rules, function( rule ) {
-        if( _.size( rule.attributes ) > 0 ) {
+        if( !_.isEmpty( rule.attributes ) ) {
           sheet.push( rule.toString() );
         }
       } );

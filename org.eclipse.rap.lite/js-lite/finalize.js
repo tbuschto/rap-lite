@@ -24,4 +24,13 @@
     }
   };
 
+  _.mixin( {
+    "stuff" : function( obj ) {
+      for( var key in obj ) {
+        obj[ key ] = true;
+      }
+      return obj;
+    }
+  } );
+
 }());

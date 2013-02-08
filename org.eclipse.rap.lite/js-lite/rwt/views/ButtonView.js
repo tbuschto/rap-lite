@@ -17,16 +17,23 @@
 
     renderChanges : function( changes ) {
       if( changes.text || changes.image ) {
-        this.renderContent();
+        this.renderContent( this.$el, this.model, changes );
+      }
+      if( changes.selection ) {
+       this.renderStates( this.$el, this.model );
       }
     },
 
-    renderContent : function() {
-      this.$el.empty();
-      this.$el.append(
-          ImageTemplate.render( 'Button-Image', this.model.get( "image" ) )
-        + TextTemplate.render( 'Button-Text', this.model.get( "text" ) )
+    renderContent : function( el, model ) {
+      el.empty();
+      el.append(
+          ImageTemplate.render( 'Button-Image', model.get( "image" ) )
+        + TextTemplate.render( 'Button-Text', model.get( "text" ) )
       );
+    },
+
+    renderStates : function( el, model ) {
+      el.toggleClass( "selected", model.get( "selection" ) );
     },
 
     select : function() {

@@ -26,12 +26,12 @@
     initializeControl : function() {
       this.applyParent();
       this.applyCssClasses();
-      this.model.on( "change", this.render, this );
       this.model.on( "change:bounds", this.renderBounds, this );
+      this.model.on( "change", this.render, this );
     },
 
     render : function() {
-      this.renderChanges( this.model.changedAttributes() );
+      this.renderChanges( _.stuff( this.model.changedAttributes() ) );
     },
 
     renderChanges : function() {},
