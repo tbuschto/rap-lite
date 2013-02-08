@@ -5,8 +5,6 @@
 
   rwt.theme.StyleUtil = {
 
-    DISPLAY_SELECTOR : ".rap-display",
-
     DISPLAY_CLASS : "rap-display",
 
     BROWSER_PREFIX : ( function() {
@@ -25,16 +23,34 @@
       return result;
     }() ),
 
-    createSelectorString : function( arg ) {
-      var result = [];
-      var items = !_.isArray( arg ) ? [ arg ] : arg;
-      if( items.length === 0 ) {
-        throw new Error( "No items to select" );
+    createSelectorString : function( selectorArr, prefixed ) {
+      if( selectorArr.length === 0 ) {
+        throw new Error( "Empty selector list" );
       }
-      _.forEach( items, function( item ) {
-        result.push( item.toString() );
+      var result = [];
+      _.forEach( selectorArr, function( selector ) {
+        result.push( selector.toString( prefixed ) );
       } );
-      return result.join( " " );
+      return result.join( ", " );
+    },
+
+    /**
+     * item: String/StyleSelectorItem
+     * item1 -> item1
+     * [ item1, item2, item3 ] -> item1 item2 item3
+     * [ [ item1, item2 ],[ item3, item4 ] ] -> item1 item2, item3 item4
+     * [ item1, [ item2, item3 ], item4 ] -> illegal
+     */
+    createSelectorsArray : function( arg ) {
+      var result;
+      if( _.isArray( arg ) ) {
+        result = arg.concat();  // arg is alreay selector array
+      } else if( arg instanceof rwt.theme.StyleSelector ) {
+        result = [ arg ];
+      } else {
+        result = [ new rwt.theme.StyleSelector( arg ) ]; // arg is string or item
+      }
+      return result;
     },
 
     addRulesToSheet : function( styleSheet, rules, filter ) {

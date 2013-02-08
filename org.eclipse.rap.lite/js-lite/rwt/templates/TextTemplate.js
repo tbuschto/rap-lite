@@ -6,16 +6,19 @@
   rwt.templates.TextTemplate = {
 
     textTemplate : _.template(
-        "<div class='text subwidget' ><%=text%></div>",
+      "<div class='<%=data.classAttr%>' ><%=data.text%></div>",
       null,
-      { "variable" : "text" }
+      { "variable" : "data" }
     ),
 
-    render : function( text ) {
+    render : function( classAttr, text ) {
       if( !text ) {
         return "";
       }
-      return this.textTemplate( text );
+      return this.textTemplate( {
+        "classAttr" : classAttr,
+        "text" : text
+      } );
     }
 
   };

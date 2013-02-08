@@ -6,17 +6,23 @@
   rwt.templates.ImageTemplate = {
 
     imageTemplate : _.template(
-        "<div class='icon subwidget' style='background-image:url(<%=image[0]%>);"
-      + "width:<%=image[1]%>px;height:<%=image[2]%>px'></div>",
+        "<div class='<%=data.classAttr%>' style='"
+      + "background-image:url(<%=data.image[0]%>);"
+      + "width:<%=data.image[1]%>px;"
+      + "height:<%=data.image[2]%>px'>"
+      + "</div>",
       null,
-      { "variable" : "image" }
+      { "variable" : "data" }
     ),
 
-    render : function( imageArr ) {
+    render : function( classAttr, imageArr ) {
       if( !imageArr ) {
         return "";
       }
-      return this.imageTemplate( imageArr );
+      return this.imageTemplate( {
+        "classAttr" : classAttr,
+        "image" : imageArr
+      } );
     }
 
   };

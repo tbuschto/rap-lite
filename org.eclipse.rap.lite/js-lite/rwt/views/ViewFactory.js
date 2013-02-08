@@ -1,5 +1,5 @@
-addprovider {
-  accept
-  type
-  factory
-}
+//addprovider {
+//  accept
+//  type
+//  factory
+//}

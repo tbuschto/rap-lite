@@ -8,7 +8,7 @@ namespace( "rwt.remote" );
 
   rwt.remote.Server.getInstance = function() {
     if( !this._instance ) {
-      this._instance = new this();
+      this._instance = new rwt.remote.Server();
     }
     return this._instance;
   };
@@ -76,7 +76,7 @@ namespace( "rwt.remote" );
     },
 
     _error : function( jqXHR, textStatus, errorThrown ) {
-      alert( textStatus + ": " + errorThrown );
+      window.alert( textStatus + ": " + errorThrown );
     }
 
 

@@ -50,10 +50,10 @@
       if( condition.charAt( 0 ) === "[" ) {
         condition = "." + condition.slice( 1 );
       }
-      classes.push( condition );
       if( condition === ":pressed" ) {
         condition = ":hover:active";
       }
+      classes.push( condition );
     }
     return new rwt.theme.StyleSelectorItem( "." + element, classes );
   };
