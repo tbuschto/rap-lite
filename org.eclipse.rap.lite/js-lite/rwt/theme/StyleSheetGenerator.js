@@ -14,6 +14,7 @@
       "font" : "fonts",
       "cursor" : "cursors",
       "background-gradient" : "gradients",
+      "background-image" : "images",
       "border-radius" : "boxdims",
       "spacing" : "dimensions"
     },
@@ -52,13 +53,20 @@
           for( var i = 0; i < conditionalValues.length; i++ ) {
             var condValue = conditionalValues[ i ];
             var selectorItem = rwt.theme.StyleSelectorItem.fromTheme( element, condValue[ 0 ] );
+            var rule = result.getRule( selectorItem );
             var value  = this._resolveValue( property, condValue[ 1 ], theme );
-            result.getRule( selectorItem ).set( property, value );
             if( property === "background-image" ) {
+              if( value ) {
+                value = [ "rwt-resources/themes/images/" + condValue[ 1 ] ].concat( value );
+                console.log( value );
+                rule.set( property, value );
+              }
               value  = this._resolveValue( "background-gradient", condValue[ 1 ], theme );
               if( value ) {
-                result.getRule( selectorItem ).set( "background", value );
+                rule.set( "background", value );
               }
+            } else {
+              rule.set( property, value );
             }
           }
         }

@@ -14,6 +14,10 @@
 
   rwt.theme.StyleSelector.prototype = {
 
+    getItem : function( index ) {
+      return this._items[ index ];
+    },
+
     toString : function( prefixed ) {
       var result = prefixed ? [ "." + rwt.theme.StyleUtil.DISPLAY_CLASS ] : [];
       _.forEach( this._items, function( item ) {

@@ -17,8 +17,12 @@
       this.selectorString = rwt.theme.StyleUtil.createSelectorString( this._selectorArr );
     },
 
-    getSelector : function() {
-      return this._selectorArr.concat(); // save since StyleSelector is immutable
+    getSelector : function( index ) {
+      if( _.isNumber( index ) ) {
+        return this._selectorArr[ index ];
+      } else {
+        return this._selectorArr.concat();
+      }
     },
 
     toString : function() {

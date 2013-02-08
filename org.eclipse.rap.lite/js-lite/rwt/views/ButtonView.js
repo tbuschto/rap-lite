@@ -5,7 +5,9 @@
 
   var ImageTemplate = rwt.templates.ImageTemplate;
   var TextTemplate = rwt.templates.TextTemplate;
+  var IconTemplate = rwt.templates.IconTemplate;
   var StyleSelector = rwt.theme.StyleSelector;
+  var StyleSelectorItem = rwt.theme.StyleSelectorItem;
 
   rwt.views.ButtonView = rwt.views.ControlView.extend( {
 
@@ -28,6 +30,7 @@
       el.empty();
       el.append(
           ImageTemplate.render( 'Button-Image', model.get( "image" ) )
+        + IconTemplate.render( this.getIcon( model.style ) )
         + TextTemplate.render( 'Button-Text', model.get( "text" ) )
       );
     },
@@ -38,6 +41,10 @@
 
     select : function() {
       this.model.select();
+    },
+
+    getIcon : function( style ) {
+      return style.CHECK ? "Button-CheckIcon" : style.RADIO ? "Button-RadioIcon" : null;
     }
 
   } );
@@ -91,9 +98,32 @@
     },
 
     "Button-CheckIcon" : function( styleSheet, rules ) {
+      _.forEach( rules, function( rule ) {
+        var bgImage = rule.get( "background-image" );
+        if( bgImage ) {
+          var selectorItem = rule.getSelector( 0 ).getItem( 0 );
+          var newSelector = new StyleSelector( [
+            new StyleSelectorItem( ".Button", selectorItem.getClasses() ),
+            selectorItem.element
+          ] );
+          styleSheet.getRule( newSelector ).set( {
+            "background-image" : bgImage,
+            "width" : bgImage[ 1 ],
+            "height" : bgImage[ 2 ]
+          } );
+        }
+      } );
+      styleSheet.getRule( ".Button-CheckIcon" ).set( {
+        "display" : "inline-block",
+        "vertical-align" : "middle"
+      } );
     },
 
     "Button-RadioIcon" : function( styleSheet, rules ) {
+      styleSheet.getRule( ".Button-RadioIcon" ).set( {
+        "display" : "inline-block",
+        "vertical-align" : "middle"
+      } );
     }
 
   };

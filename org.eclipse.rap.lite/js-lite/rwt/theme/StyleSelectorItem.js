@@ -17,7 +17,7 @@
       classes = arguments[ 0 ];
     }
     if( _.isString( element ) ) {
-      this._element = element;
+      this.element = element;
     }
     if( _.isArray( classes ) ) {
       this._classes = classes.concat().sort();
@@ -26,16 +26,20 @@
 
   rwt.theme.StyleSelectorItem.prototype = {
 
-    _element : null,
+    element : null,
     _classes : [],
+
+    getClasses : function() {
+      return this._classes.concat();
+    },
 
     toString : function() {
       var result = [];
-      if( this._element == null && this._classes.length === 0 ) {
+      if( this.element == null && this._classes.length === 0 ) {
         throw new Error( "Item selects nothing" );
       }
-      if( this._element != null ) {
-        result.push( this._element );
+      if( this.element != null ) {
+        result.push( this.element );
       }
       result = result.concat( this._classes );
       return result.join( "" );

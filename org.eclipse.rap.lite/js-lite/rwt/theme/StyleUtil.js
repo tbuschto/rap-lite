@@ -79,6 +79,9 @@
     },
 
     _cssStringCreator : {
+      "background-image" : function( imageArr ) {
+        return "url( " + imageArr[ 0 ] + ")";
+      },
       "background-color" : function( rgba ) {
         return "rgb(" + _.first( rgba, 3 ).join( "," ) + ")";
       },
@@ -90,6 +93,12 @@
           result = border.width + "px " + border.style + " " + border.color;
         }
         return result;
+      },
+      "width" : function( px ) {
+        return px + "px";
+      },
+      "height" : function( px ) {
+        return px + "px";
       },
       "padding" : function( padding ) {
         return padding.join( "px " ) + "px";
