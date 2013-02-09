@@ -51,6 +51,8 @@ public class RapLiteServlet extends HttpServlet {
     "rwt/templates/IconTemplate.js",
     "rwt/templates/ImageTemplate.js",
     "rwt/templates/TextTemplate.js",
+    "rwt/logic/ToggleLogic.js",
+    "rwt/logic/RadioLogic.js",
     "rwt/views/ControlView.js",
     "rwt/views/ShellView.js",
     "rwt/views/LabelView.js",

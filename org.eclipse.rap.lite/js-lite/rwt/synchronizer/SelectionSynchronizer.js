@@ -4,20 +4,20 @@
   namespace( "rwt.synchronizer" );
 
   rwt.synchronizer.SelectionSynchronizer = function( model ) {
-    _.bindAll( this );
-    this.model = model;
-    this.model.on( "change:selection", this.onChangeSelection );
-    this.model.on( "Selection", this.onSelection );
+    model.on( "change:selection", this.onChangeSelection );
+    model.on( "selection", _.partial( this.onSelection, model ) );
   };
 
   rwt.synchronizer.SelectionSynchronizer.prototype = {
 
-    onChangeSelection : function() {
-      rap.getRemoteObject( this.model ).set( "selection", this.model.get( "selection" ) );
+    onChangeSelection : function( model, value, options ) {
+      if( !options.nosync ) {
+        rap.getRemoteObject( model ).set( "selection", value );
+      }
     },
 
-    onSelection : function() {
-      rap.getRemoteObject( this.model ).notify( "Selection" );
+    onSelection : function( model ) {
+      rap.getRemoteObject( model ).notify( "Selection" );
     }
 
   };

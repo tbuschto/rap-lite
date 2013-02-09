@@ -38,6 +38,7 @@ public class RapLiteEntryPoint extends AbstractEntryPoint {
     check.setLayoutData( new GridData( SWT.LEFT, SWT.TOP, true, false ) );
     check.setText( "This is a Check Box" );
     check.setImage( Display.getCurrent().getSystemImage( SWT.ICON_WARNING ) );
+    check.setSelection( true );
     check.addListener( SWT.Selection, new Listener() {
       @Override
       public void handleEvent( Event event ) {

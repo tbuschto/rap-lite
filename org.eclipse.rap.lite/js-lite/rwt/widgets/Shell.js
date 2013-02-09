@@ -3,7 +3,21 @@
 
   namespace( "rwt.widgets" );
 
-  rwt.widgets.Shell = rwt.widgets.Control.extend( {} );
+  rwt.widgets.Shell = rwt.widgets.Control.extend( {
+
+    defaults : {
+      children : []
+    },
+
+    getChildren : function() {
+      var result = this.get( "children" ).concat();
+      _.forEach( result, function( id, i ) {
+        result[ i ] = rap.getObject( id );
+      } );
+      return result;
+    }
+
+  } );
 
   rwt.remote.HandlerRegistry.add( "rwt.widgets.Shell", {
 
@@ -21,7 +35,7 @@
 
     isPublic : true,
 
-    properties : [ "bounds" ]
+    properties : [ "bounds", "children" ]
 
   } );
 

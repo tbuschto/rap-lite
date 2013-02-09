@@ -21,6 +21,10 @@
       if( this.defaults ) {
         this.set( this.defaults );
       }
+    },
+
+    getParent : function() {
+      return rap.getObject( this.get( "parent" ) );
     }
 
   } );

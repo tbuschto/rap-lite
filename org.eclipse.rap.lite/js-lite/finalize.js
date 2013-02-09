@@ -18,7 +18,10 @@
 
   rwt.remote.MessageProcessor._processSetImpl = function( targetObject, handler, properties ) {
     if( targetObject instanceof Backbone.Model ) {
-      targetObject.set( targetObject.parse( _.pick( properties, handler.properties ) ) ) ;
+      targetObject.set(
+        targetObject.parse( _.pick( properties, handler.properties ) ),
+        { "nosync" : true }
+      );
     } else {
       orgSet.apply( this, targetObject, handler, properties );
     }

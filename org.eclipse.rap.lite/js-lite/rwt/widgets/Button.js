@@ -5,16 +5,13 @@
 
   rwt.widgets.Button = rwt.widgets.Control.extend( {
 
-    defaults
-     : {
+    defaults : {
       "selection" : false
     },
 
     select : function() {
-      if( !this.style.PUSH ) {
-        this.set( "selection", !this.get( "selection" ) );
-      }
-      this.trigger( "Selection" );
+      this.trigger( "logic:selection" );
+      this.trigger( "selection" );
     }
 
   } );
@@ -27,13 +24,18 @@
         { parse : true }
       );
       model.view = new rwt.views.ButtonView( { "model" : model } );
+      if( model.style.CHECK || model.style.TOGGLE ) {
+        new rwt.logic.ToggleLogic( model );
+      } else if( model.style.RADIO ) {
+        new rwt.logic.RadioLogic( model );
+      }
       new rwt.synchronizer.SelectionSynchronizer( model );
       return model;
     },
 
     isPublic : true,
 
-    properties : [ "bounds", "text", "image" ],
+    properties : [ "bounds", "text", "image", "selection" ],
 
     events : [ "Selection" ]
 
