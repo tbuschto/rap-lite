@@ -6,8 +6,7 @@
   var ImageTemplate = rwt.templates.ImageTemplate;
   var TextTemplate = rwt.templates.TextTemplate;
   var IconTemplate = rwt.templates.IconTemplate;
-  var StyleSelector = rwt.theme.StyleSelector;
-  var StyleSelectorItem = rwt.theme.StyleSelectorItem;
+  var StyleUtil = rwt.theme.StyleUtil;
 
   rwt.views.ButtonView = rwt.views.ControlView.extend( {
 
@@ -53,77 +52,29 @@
 
     "Button" : function( styleSheet, rules ) {
       var filter = [
-        "background-color",
-        "border",
-        "padding",
-        "font",
-        "cursor",
-        "background",
-        "border-radius"
+        "background-color", "border", "padding", "font", "cursor", "background", "border-radius"
       ];
       var subWidgets = [
-        new StyleSelector( ".Button-Text" ),
-        new StyleSelector( ".Button-Image" ),
-        new StyleSelector( ".Button-CheckIcon" ),
-        new StyleSelector( ".Button-RadioIcon" )
+        [ ".Button-Text" ], [ ".Button-Image" ], [ ".Button-CheckIcon" ], [ ".Button-RadioIcon" ]
       ];
-      _.forEach( rules, function( rule ) {
-        var selector = rule.getSelector();
-        var newRule = styleSheet.getRule( selector );
-        newRule.set( _.pick( rule.attributes, filter ) );
-        if( rule.has( "spacing" ) ) {
-          styleSheet.getRule( subWidgets ).set( {
-            "margin-right" : rule.get( "spacing" )
-          } );
-        }
-      } );
+      StyleUtil.addRulesToSheet( styleSheet, rules, filter );
+      StyleUtil.parseSpacing( styleSheet, rules, subWidgets );
       styleSheet.getRule( ".Button" ).set( {
         "user-select" : "none",
         "white-space" : "nowrap"
       } );
-    },
-
-    "Button-Text" : function( styleSheet ) {
-      styleSheet.getRule( ".Button-Text" ).set( {
-        "display" : "inline-block",
-        "vertical-align" : "middle"
-      } );
-    },
-
-    "Button-Image" : function( styleSheet ) {
-      styleSheet.getRule( ".Button-Image" ).set( {
+      styleSheet.getRule( subWidgets ).set( {
         "display" : "inline-block",
         "vertical-align" : "middle"
       } );
     },
 
     "Button-CheckIcon" : function( styleSheet, rules ) {
-      _.forEach( rules, function( rule ) {
-        var bgImage = rule.get( "background-image" );
-        if( bgImage ) {
-          var selectorItem = rule.getSelector( 0 ).getItem( 0 );
-          var newSelector = new StyleSelector( [
-            new StyleSelectorItem( ".Button", selectorItem.getClasses() ),
-            selectorItem.element
-          ] );
-          styleSheet.getRule( newSelector ).set( {
-            "background-image" : bgImage,
-            "width" : bgImage[ 1 ],
-            "height" : bgImage[ 2 ]
-          } );
-        }
-      } );
-      styleSheet.getRule( ".Button-CheckIcon" ).set( {
-        "display" : "inline-block",
-        "vertical-align" : "middle"
-      } );
+      StyleUtil.parseIconRules( styleSheet, rules, ".Button" );
     },
 
     "Button-RadioIcon" : function( styleSheet, rules ) {
-      styleSheet.getRule( ".Button-RadioIcon" ).set( {
-        "display" : "inline-block",
-        "vertical-align" : "middle"
-      } );
+      StyleUtil.parseIconRules( styleSheet, rules, ".Button" );
     }
 
   };

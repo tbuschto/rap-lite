@@ -3,6 +3,9 @@
 
   namespace( "rwt.theme" );
 
+  var StyleSelector = rwt.theme.StyleSelector;
+  var StyleSelectorItem = rwt.theme.StyleSelectorItem;
+
   rwt.theme.StyleUtil = {
 
     DISPLAY_CLASS : "rap-display",
@@ -58,6 +61,35 @@
         var selector = rule.getSelector();
         var newRule = new rwt.theme.StyleRule( selector, _.pick( rule.attributes, filter ) );
         styleSheet.addRule( newRule );
+      } );
+    },
+
+    parseIconRules : function( styleSheet, rules, widgetClass ) {
+      _.forEach( rules, function( rule ) {
+        var bgImage = rule.get( "background-image" );
+        if( bgImage ) {
+          var selectorItem = rule.getSelector( 0 ).getItem( 0 );
+          var newSelector = new StyleSelector( [
+            new StyleSelectorItem( widgetClass, selectorItem.getClasses() ),
+            selectorItem.element
+          ] );
+          styleSheet.getRule( newSelector ).set( {
+            "background-image" : bgImage,
+            "width" : bgImage[ 1 ],
+            "height" : bgImage[ 2 ]
+          } );
+        }
+      } );
+    },
+
+    parseSpacing : function( styleSheet, rules, subWidgets ) {
+      _.forEach( rules, function( rule ) {
+        var selector = rule.getSelector();
+        if( rule.has( "spacing" ) ) {
+          styleSheet.getRule( subWidgets ).set( {
+            "margin-right" : rule.get( "spacing" )
+          } );
+        }
       } );
     },
 

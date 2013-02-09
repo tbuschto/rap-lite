@@ -58,7 +58,6 @@
             if( property === "background-image" ) {
               if( value ) {
                 value = [ "rwt-resources/themes/images/" + condValue[ 1 ] ].concat( value );
-                console.log( value );
                 rule.set( property, value );
               }
               value  = this._resolveValue( "background-gradient", condValue[ 1 ], theme );

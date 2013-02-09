@@ -57,7 +57,7 @@ namespace( "rwt.remote" );
         this._writer = null;
         $.ajax( {
           type: "POST",
-          url: this._url,
+          url: this._url + "?lite=true", //identifies the client, sometimes on first POST, not GET
           data: data,
           success : this._success,
           error : this._error,
