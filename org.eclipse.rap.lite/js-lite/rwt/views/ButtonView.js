@@ -55,7 +55,7 @@
     }
   } );
 
-  rwt.views.ButtonView.themeParser = {
+  rwt.theme.ThemeStore.set( {
 
     "Button" : function( styleSheet, rules ) {
       var filter = [
@@ -84,6 +84,6 @@
       StyleUtil.parseIconRules( styleSheet, rules, ".Button" );
     }
 
-  };
+  } );
 
 }());

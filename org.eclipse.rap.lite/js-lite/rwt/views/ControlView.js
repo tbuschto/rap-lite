@@ -67,7 +67,7 @@
 
   } );
 
-  rwt.views.ControlView.themeParser = {
+  rwt.theme.ThemeStore.set( {
     "Control" : function( styleSheet ) {
       var rule = styleSheet.getRule( ".Control" );
       rule.set( {
@@ -75,6 +75,6 @@
         "overflow" : "hidden"
       } );
     }
-  };
+  } );
 
 }());

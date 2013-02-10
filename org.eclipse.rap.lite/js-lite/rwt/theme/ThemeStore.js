@@ -3,11 +3,13 @@
 
   namespace( "rwt.theme" );
 
-  rwt.theme.ThemeStore = Backbone.Model.extend( {} );
+  rwt.theme.ThemeStore = new Backbone.Model();
 
   rwt.remote.HandlerRegistry.add( "rwt.theme.ThemeStore", {
 
-    factory : function(){ return {}; },
+    factory : function(){
+      return rwt.theme.ThemeStore;
+    },
 
     service : true,
 

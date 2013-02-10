@@ -21,13 +21,13 @@
     }
   } );
 
-  rwt.views.ShellView.themeParser = {
+  rwt.theme.ThemeStore.set( {
 
     "Shell" : function( styleSheet, rules ) {
       var supported = [ "background-color", "border", "padding", "font" ];
       rwt.theme.StyleUtil.addRulesToSheet( styleSheet, rules, supported );
     }
 
-  };
+  } );
 
 }());

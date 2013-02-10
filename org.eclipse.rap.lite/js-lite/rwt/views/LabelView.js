@@ -26,13 +26,13 @@
     }
   } );
 
-  rwt.views.LabelView.themeParser = {
+  rwt.theme.ThemeStore.set( {
 
     "Label" : function( styleSheet, rules ) {
       var supported = [ "background-color", "border", "padding", "font" ];
       rwt.theme.StyleUtil.addRulesToSheet( styleSheet, rules, supported );
     }
 
-  };
+  } );
 
 }());

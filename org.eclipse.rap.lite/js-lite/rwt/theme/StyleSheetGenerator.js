@@ -20,23 +20,9 @@
       "spacing" : "dimensions"
     },
 
-    getParser : function() {
-      // TODO : allow multiple parser for one element
-      if( this._parser == null ) {
-        this._parser = {};
-        for( var key in rwt.views ) {
-          var View = rwt.views[ key ];
-          if( View.themeParser ) {
-            _.extend( this._parser, View.themeParser );
-          }
-        }
-      }
-      return this._parser;
-    },
-
     generateFromTheme : function( theme ) {
       var styleSheet = new rwt.theme.StyleSheet();
-      var parser = this.getParser();
+      var parser = rwt.theme.ThemeStore.attributes;
       for( var element in parser ) {
         var widgetSheet = this._createWidgetSheet( theme, element );
         parser[ element ]( styleSheet, widgetSheet ? widgetSheet.getRules() : null );
