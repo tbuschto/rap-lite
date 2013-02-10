@@ -14,6 +14,12 @@
 
   } );
 
+  rwt.views.ViewProviderRegistry.add( {
+    model : "rwt.model.Shell",
+    create : function( model ) {
+      return new rwt.views.ShellView( model );
+    }
+  } );
 
   rwt.views.ShellView.themeParser = {
 

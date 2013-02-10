@@ -48,6 +48,13 @@
 
   } );
 
+  rwt.views.ViewProviderRegistry.add( {
+    model : "rwt.model.Button",
+    create : function( model ) {
+      return new rwt.views.ButtonView( { "model" : model } );
+    }
+  } );
+
   rwt.views.ButtonView.themeParser = {
 
     "Button" : function( styleSheet, rules ) {

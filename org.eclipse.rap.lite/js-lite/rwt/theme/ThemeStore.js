@@ -1,6 +1,10 @@
 (function(){
   'use strict';
 
+  namespace( "rwt.theme" );
+
+  rwt.theme.ThemeStore = Backbone.Model.extend( {} );
+
   rwt.remote.HandlerRegistry.add( "rwt.theme.ThemeStore", {
 
     factory : function(){ return {}; },
