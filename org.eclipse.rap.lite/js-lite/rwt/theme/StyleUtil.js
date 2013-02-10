@@ -167,7 +167,7 @@
 
     _cssStringCreator : {
       "background-image" : function( imageArr ) {
-        return "url(" + imageArr[ 0 ] + ")";
+        return "url(/" + imageArr[ 0 ] + ")";
       },
       "background-color" : function( rgba ) {
         return "#" + rwt.util.Colors.rgbToHexString( rgba );

@@ -21,7 +21,7 @@
       "loadActiveTheme" : function( object, params ) {
         $.ajax( {
           type : "GET",
-          url : params.url,
+          url : "/" + params.url,
           converters :{
             "text application/json" : JSON.parse
           },

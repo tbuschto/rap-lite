@@ -7,7 +7,7 @@
 
     imageTemplate : _.template(
         "<div class='<%=data.classAttr%>' style='"
-      + "background-image:url(<%=data.image[0]%>);"
+      + "background-image:url(/<%=data.image[0]%>);"
       + "width:<%=data.image[1]%>px;"
       + "height:<%=data.image[2]%>px'>"
       + "</div>",

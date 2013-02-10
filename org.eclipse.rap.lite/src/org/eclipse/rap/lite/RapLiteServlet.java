@@ -78,7 +78,7 @@ public class RapLiteServlet extends HttpServlet {
     throws ServletException, IOException
   {
     String path = req.getPathInfo();
-    if( path == null ) {
+    if( path == null || path.endsWith( ".html" ) ) {
       deliverHTML( req, resp );
     } else if( path.equals( "/full" ) ) {
       startFullApplication( req, resp );
@@ -161,9 +161,14 @@ public class RapLiteServlet extends HttpServlet {
     UISessionImpl uiSession = UISessionImpl.getInstanceFromSession( req.getSession() );
     if( uiSession != null && !( uiSession.getClient() instanceof RapLiteClient ) ) {
       req.getSession().invalidate();
-      System.out.println( "invalidate" );
     }
-    String path = "html/index.html";
+    String url = req.getPathInfo();
+    String path;
+    if( url == null || "/".equals( url ) ) {
+      path = "html/index.html";
+    } else {
+      path = "html/" + url;
+    }
     ClassLoader loader = RapLiteServlet.class.getClassLoader();
     InputStream stream = loader.getResourceAsStream( path );
     PrintWriter writer = null;

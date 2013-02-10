@@ -11,7 +11,10 @@
   rwt.widgets.base.Widget = function() {};
 
   // method to start a ui session within an html element
-  rap.init = function( element, url ) {
+  rap.init = function( args ) {
+    args = args ? args : {};
+    var element = args.element? args.element : document.body;
+    var url = args.url ? args.url : getParam( "app" ) ? getParam( "app" ) : "/application";
     var errMsg = null;
     var Client = rwt.client.Client;
     if( Client.isInQuirksMode() ) {
@@ -53,5 +56,18 @@
       return obj;
     }
   } );
+
+  var getParam = function( name ) {
+    var result = null;
+    var href = window.location.href;
+    var hashes = href.slice( href.indexOf( "?" ) + 1 ).split( "&" );
+    for( var i = 0; i < hashes.length; i++ ) {
+      var hash = hashes[ i ].split( "=" );
+      if( hash[ 0 ] === name ) {
+        result = hash[ 1 ];
+      }
+    }
+    return result;
+  };
 
 }());
