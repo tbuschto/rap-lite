@@ -33,7 +33,11 @@
       return this._classes.concat();
     },
 
-    toString : function() {
+    hasClass : function( className ) {
+      return _.indexOf( this._classes, className, true ) !== -1;
+    },
+
+    toString : function( forBrowser ) {
       var result = [];
       if( this.element == null && this._classes.length === 0 ) {
         throw new Error( "Item selects nothing" );
@@ -42,6 +46,7 @@
         result.push( this.element );
       }
       result = result.concat( this._classes );
+      rwt.theme.StyleUtil.fixSelector( result );
       return result.join( "" );
     }
 
@@ -51,9 +56,7 @@
     var classes = [];
     for( var i = 0; i < conditions.length; i++ ) {
       var condition = conditions[ i ];
-      if( conditionToClass[ condition ] ) {
-        condition = conditionToClass[ condition ];
-      } else {
+      if( !pseudoClasses[ condition ] ) {
         var firstChar = condition.charAt( 0 );
         if( firstChar === "[" || firstChar === ":" ) {
           condition = "." + condition.slice( 1 );
@@ -64,9 +67,11 @@
     return new rwt.theme.StyleSelectorItem( "." + element, classes );
   };
 
-  var conditionToClass = {
-    ":pressed" : ":hover:active"
+  var pseudoClasses = {
+    ":pressed" : true, // converted to active on render
+    ":hover" : true,
+    ":active" : true,
+    ":disabled" : true
   };
-
 
 }());

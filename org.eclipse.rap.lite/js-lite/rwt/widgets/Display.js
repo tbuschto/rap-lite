@@ -46,9 +46,9 @@
     },
 
     _attachSelectionHandler : function() {
-      this.el.onselect = this._onSelection;
-      document.onselectstart = this._onSelection;
-      document.onselectionchange = this._onSelection;
+      $( this.el ).on( "select", this._onSelection );
+      $( document ).on( "selectstart", this._onSelection );
+      $( document ).on( "selectionchange", this._onSelection );
     },
 
     _onSelection : function( event ) {

@@ -16,8 +16,13 @@
         $.ajax( {
           type : "GET",
           url : params.url,
+          converters :{
+            "text application/json" : JSON.parse
+          },
+          dataType: "application/json",
+          contentType : "application/json; charset=UTF-8",
           success : function( theme ){
-            rwt.theme.StyleSheetGenerator.generateFromTheme( JSON.parse( theme ) );
+            rwt.theme.StyleSheetGenerator.generateFromTheme( theme );
           }
         } );
       }

@@ -27,3 +27,8 @@ rwt = {
     }
   }
 };
+
+// touching built-in prototypes is bad, but we need it for some of the webclient scripts.
+Array.prototype.indexOf = function( item ) {
+  return _.indexOf( this, item );
+};

@@ -24,6 +24,7 @@
     },
 
     initializeControl : function() {
+      rwt.theme.StyleUtil.applyBrowserFixes( this.$el );
       this.applyParent();
       this.applyCssClasses();
       this.model.on( "change:bounds", this.renderBounds, this );

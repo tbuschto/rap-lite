@@ -2,12 +2,30 @@
   'use strict';
 
   namespace( "rwt.widgets.base" );
-  delete window.namespace;
+  try {
+   delete window.namespace;
+  } catch( ex ) {
+    window.namespace = undefined;
+  }
   // widget is given special treatment by MessageProcessor
   rwt.widgets.base.Widget = function() {};
 
   // method to start a ui session within an html element
   rap.init = function( element, url ) {
+    var errMsg = null;
+    var Client = rwt.client.Client;
+    if( Client.isInQuirksMode() ) {
+      errMsg = "Quirksmode currently not supported";
+    }
+    if( Client.isMshtml() && Client.getVersion() < 8 ) {
+      errMsg = "IE " + Client.getVersion() + " not supported. Seriously, Dude, it's time to upgrade!";
+    }
+    if( errMsg ) {
+      if( element ) {
+        element.innerHTML = errMsg;
+      }
+      throw new Error( errMsg );
+    }
     new rwt.widgets.Display( element );
     $.get( url + "?lite=true", function( response ) {
       rwt.remote.MessageProcessor.processMessage( response );
@@ -23,7 +41,7 @@
         { "nosync" : true }
       );
     } else {
-      orgSet.apply( this, targetObject, handler, properties );
+      orgSet.apply( this, [ targetObject, handler, properties ] );
     }
   };
 

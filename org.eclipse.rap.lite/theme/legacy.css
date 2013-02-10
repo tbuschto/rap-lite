@@ -1,0 +1,49 @@
+Button[PUSH],
+Button[TOGGLE],
+Button[PUSH][BORDER],
+Button[TOGGLE][BORDER],
+Button[PUSH][FLAT],
+Button[TOGGLE][FLAT],
+Button[ARROW],
+Button[ARROW][BORDER],
+Button[ARROW][FLAT] {
+  background-color: #e4e4e4;
+}
+
+Button[ARROW]:default,
+Button[PUSH]:default,
+Button[TOGGLE]:default {
+  background-color: #d4d4d4;
+}
+
+Button[ARROW]:disabled,
+Button[PUSH]:disabled,
+Button[TOGGLE]:disabled,
+Button[TOGGLE]:selected:disabled {
+  background-color: #fafafa;
+}
+
+Button[ARROW]:hover,
+Button[PUSH]:hover,
+Button[TOGGLE]:hover {
+  background-color: #ddddee;
+}
+
+Button[ARROW]:pressed,
+Button[PUSH]:pressed,
+Button[TOGGLE]:pressed {
+  background-color: #ccccff;
+}
+
+Button[TOGGLE]:selected {
+  background-color: #eaeaff;
+}
+
+Button[TOGGLE]:selected:hover {
+  background-color: #eaeaff;
+}
+
+Button[CHECK][BORDER],
+Button[RADIO][BORDER] {
+  background-image: none;
+}

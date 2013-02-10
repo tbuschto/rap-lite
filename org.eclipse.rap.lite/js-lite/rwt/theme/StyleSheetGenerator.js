@@ -9,6 +9,7 @@
 
     _valueMapping : {
       "background-color" : "colors",
+      "color" : "colors",
       "border" : "borders",
       "padding" : "boxdims",
       "font" : "fonts",

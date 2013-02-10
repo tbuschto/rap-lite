@@ -32,6 +32,8 @@ public class RapLiteServlet extends HttpServlet {
     "rwt/util/Variant.js",
     "rwt/client/Client.js",
     "rwt/util/Encoding.js",
+    "rwt/util/Strings.js",
+    "rwt/util/Colors.js",
     "rwt/widgets/util/FontSizeCalculation.js",
     "rwt/remote/Server.js",
     "rwt/remote/HandlerRegistry.js",
@@ -102,7 +104,6 @@ public class RapLiteServlet extends HttpServlet {
       resp.getWriter().write( getLoaderScript() );
       resp.getWriter().close();
     } catch( IOException e ) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
   }

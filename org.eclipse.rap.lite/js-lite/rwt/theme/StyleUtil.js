@@ -3,6 +3,7 @@
 
   namespace( "rwt.theme" );
 
+  var Client = rwt.client.Client;
   var StyleSelector = rwt.theme.StyleSelector;
   var StyleSelectorItem = rwt.theme.StyleSelectorItem;
 
@@ -12,7 +13,7 @@
 
     BROWSER_PREFIX : ( function() {
       var result;
-      switch( rwt.client.Client.getEngine() ) {
+      switch( Client.getEngine() ) {
         case "gecko":
           result = "-moz-";
         break;
@@ -25,6 +26,8 @@
       }
       return result;
     }() ),
+
+    _activeFix : Client.isMshtml() || Client.isNewMshtml(),
 
     createSelectorString : function( selectorArr, prefixed ) {
       if( selectorArr.length === 0 ) {
@@ -103,19 +106,74 @@
 
     fixPropertyName : function( property ) {
       var result = property;
-      var map = this._cssPropertyMapping[ rwt.client.Client.getEngine() ];
+      var map = this._cssPropertyMapping[ Client.getEngine() ];
       if( map && map[ property ] ) {
         result = map[ property ];
       }
       return result;
     },
 
+    applyBrowserFixes : function( $el ) {
+      if( this._activeFix ) {
+        this._fixActivePseudoClass( $el );
+      }
+    },
+
+    _fixActivePseudoClass : function( $el ) {
+      $el.on( "mousedown", this._eventHandler.addActiveClass );
+      $el.on( "mouseup", this._eventHandler.removeActiveClass );
+      $el.on( "mouseleave", this._eventHandler.addAbandonedClass );
+      $el.on( "mouseenter", this._eventHandler.removeAbandonedClass );
+    },
+
+    fixSelector : function( selectorItemArray ) {
+      var pressed = _.indexOf( selectorItemArray, ":pressed" );
+      if( pressed !== -1 ) {
+        if( this._activeFix ) {
+          selectorItemArray[ pressed ] = ":hover.active";
+        } else {
+          selectorItemArray[ pressed ] = ":hover:active";
+        }
+      }
+    },
+
+    _eventHandler : {
+      addActiveClass : function( event ) {
+        $( this ).addClass( "active" );
+      },
+      removeActiveClass : function( event ) {
+        $( this ).removeClass( "active" );
+      },
+      addAbandonedClass : function( event ) {
+        if( $( this ).hasClass( "active" ) ) {
+          $( this ).removeClass( "active" );
+          $( this ).addClass( "abandoned" );
+        }
+      },
+      removeAbandonedClass : function( event ) {
+        if( $( this ).hasClass( "abandoned" ) ) {
+          $( this ).addClass( "active" );
+          $( this ).removeClass( "abandoned" );
+        }
+      },
+      clearAbandonedClass : function( event ) {
+        $( this ).removeClass( "abandoned" );
+      }
+    },
+
+    _init : function() {
+      $( document ).on( "mouseup", ".abandoned", this._eventHandler.clearAbandonedClass );
+    },
+
     _cssStringCreator : {
       "background-image" : function( imageArr ) {
-        return "url( " + imageArr[ 0 ] + ")";
+        return "url(" + imageArr[ 0 ] + ")";
       },
       "background-color" : function( rgba ) {
-        return "rgb(" + _.first( rgba, 3 ).join( "," ) + ")";
+        return "#" + rwt.util.Colors.rgbToHexString( rgba );
+      },
+      "color" : function( rgba ) {
+        return "#" + rwt.util.Colors.rgbToHexString( rgba );
       },
       "border" : function( border ) {
         var result;
@@ -151,13 +209,13 @@
         return result.join( " " );
       },
       "background" : function( gradientObject ) {
-        var args = [ gradientObject.horizontal === true ? "0deg" : "-90deg" ];
-        for( var i = 0; i < gradientObject.colors.length; i++ ) {
-          var position = gradientObject.percents[ i ] + "%";
-          var color = gradientObject.colors[ i ];
-          args.push( color + " " + position );
+        var result = null;
+        if( Client.supportsCss3() ) {
+          result = rwt.theme.StyleUtil._createCssGradient( gradientObject );
+        } else if( Client.supportsSvg() ) {
+          result = rwt.theme.StyleUtil._createSvgGradient( gradientObject );
         }
-        return rwt.theme.StyleUtil.BROWSER_PREFIX + "linear-gradient( " + args.join() + ")";
+        return result;
       },
       "border-radius" : function( radii ) {
         return radii.join( "px " ) + "px";
@@ -171,8 +229,35 @@
       "gecko" : {
         "user-select" : "-moz-user-select"
       }
+    },
+
+    _createCssGradient : function( gradientObject ) {
+      var args = [ gradientObject.horizontal === true ? "0deg" : "-90deg" ];
+      for( var i = 0; i < gradientObject.colors.length; i++ ) {
+        var position = gradientObject.percents[ i ] + "%";
+        var color = gradientObject.colors[ i ];
+        args.push( color + " " + position );
+      }
+      return rwt.theme.StyleUtil.BROWSER_PREFIX + "linear-gradient( " + args.join() + ")";
+    },
+
+    _createSvgGradient : function( gradientObject ) {
+      var result = [ "url(/lite/gradient.svg?colors=" ];
+      var colors = [];
+      for( var i = 0; i < gradientObject.colors.length; i++ ) {
+        colors[ i ] = gradientObject.colors[ i ].slice( 1 );
+      }
+      result.push( colors.join( "," ) );
+      result.push( "&stops=", gradientObject.percents.join( "," ) );
+      if( gradientObject.horizontal === true  ) {
+        result.push( "&horizontal=true" );
+      }
+      result.push( ")" );
+      return result.join("");
     }
 
   };
+
+  rwt.theme.StyleUtil._init();
 
 }());

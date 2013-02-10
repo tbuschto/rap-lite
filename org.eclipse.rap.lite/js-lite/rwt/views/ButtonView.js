@@ -52,7 +52,7 @@
 
     "Button" : function( styleSheet, rules ) {
       var filter = [
-        "background-color", "border", "padding", "font", "cursor", "background", "border-radius"
+        "background-color", "border", "padding", "font", "cursor", "background", "border-radius", "color"
       ];
       var subWidgets = [
         [ ".Button-Text" ], [ ".Button-Image" ], [ ".Button-CheckIcon" ], [ ".Button-RadioIcon" ]

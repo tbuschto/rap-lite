@@ -18,10 +18,10 @@
       return this._items[ index ];
     },
 
-    toString : function( prefixed ) {
-      var result = prefixed ? [ "." + rwt.theme.StyleUtil.DISPLAY_CLASS ] : [];
+    toString : function( forBrowser ) {
+      var result = forBrowser ? [ "." + rwt.theme.StyleUtil.DISPLAY_CLASS ] : [];
       _.forEach( this._items, function( item ) {
-        result.push( item.toString() );
+        result.push( item.toString( forBrowser ) );
       } );
       return result.join( " " );
     }

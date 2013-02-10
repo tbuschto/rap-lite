@@ -7,10 +7,6 @@
 
   rwt.theme.StyleRule = Backbone.Model.extend( {
 
-    /**
-     *
-     * @returns {}
-     */
     constructor : function( selectors, attributes ) {
       Backbone.Model.apply( this, [ attributes ] );
       this._selectorArr = rwt.theme.StyleUtil.createSelectorsArray( selectors );
@@ -29,8 +25,14 @@
       var selectorStr = rwt.theme.StyleUtil.createSelectorString( this._selectorArr, true );
       var result = [ selectorStr + " {\n" ];
       for( var property in this.attributes ) {
-        result.push( "  ", StyleUtil.fixPropertyName( property ), ": " );
-        result.push( StyleUtil.toCssString( property, this.get( property ) ), ";\n" );
+        var cssValue = StyleUtil.toCssString( property, this.get( property ) );
+        var cssProperty = StyleUtil.fixPropertyName( property );
+        if( property === "background-color" ) {
+//          console.log( this.selectorString, cssProperty, cssValue );
+        }
+        if( cssValue != null && cssProperty != null ) {
+          result.push( "  ", cssProperty, ": ", cssValue, ";\n" );
+        }
       }
       result.push( "}" );
       return result.join( "" );
