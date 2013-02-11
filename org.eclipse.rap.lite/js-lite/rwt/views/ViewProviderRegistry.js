@@ -19,7 +19,7 @@
       }
     },
 
-    getProviers : function( model ) {
+    getProviders : function( model ) {
       return this._map[ model ];
     }
 

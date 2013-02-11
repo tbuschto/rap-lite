@@ -49,7 +49,7 @@
   } );
 
   rwt.views.ViewProviderRegistry.add( {
-    model : "rwt.model.Button",
+    model : "rwt.widgets.Button",
     create : function( model ) {
       return new rwt.views.ButtonView( { "model" : model } );
     }

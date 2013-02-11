@@ -20,10 +20,10 @@
 
     factory : function( properties ) {
       var model = new rwt.widgets.Button(
-        _.pick( properties, [ "parent", "style" ] ),
+        _.pick( properties, [ "parent", "style", "customVariant" ] ),
         { parse : true }
       );
-      model.view = new rwt.views.ButtonView( { "model" : model } );
+      model.view = rwt.views.ViewFactory.createView( "rwt.widgets.Button", model );
       if( model.style.CHECK || model.style.TOGGLE ) {
         new rwt.logic.ToggleLogic( model );
       } else if( model.style.RADIO ) {
