@@ -62,7 +62,7 @@
         "background-color", "border", "padding", "font", "cursor", "background", "border-radius", "color"
       ];
       var subWidgets = [
-        [ ".Button-Text" ], [ ".Button-Image" ], [ ".Button-CheckIcon" ], [ ".Button-RadioIcon" ]
+        [ [ ".Button-Text"]  ], [ [ ".Button-Image" ] ], [ [ ".Button-CheckIcon" ] ], [ [ ".Button-RadioIcon" ] ]
       ];
       StyleUtil.addRulesToSheet( styleSheet, rules, filter );
       StyleUtil.parseSpacing( styleSheet, rules, subWidgets );

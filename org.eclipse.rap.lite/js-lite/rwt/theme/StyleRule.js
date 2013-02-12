@@ -7,29 +7,22 @@
 
   rwt.theme.StyleRule = Backbone.Model.extend( {
 
-    constructor : function( selectors, attributes ) {
+    constructor : function( selector, attributes ) {
       Backbone.Model.apply( this, [ attributes ] );
-      this._selectorArr = rwt.theme.StyleUtil.createSelectorsArray( selectors );
-      this.selectorString = rwt.theme.StyleUtil.createSelectorString( this._selectorArr );
-    },
-
-    getSelector : function( index ) {
-      if( _.isNumber( index ) ) {
-        return this._selectorArr[ index ];
+      if( selector instanceof rwt.theme.StyleSelector ) {
+        this.selector = selector;
       } else {
-        return this._selectorArr.concat();
+        this.selector = new rwt.theme.StyleSelector( selector );
       }
+      this.selectorString = this.selector.toString();
     },
 
     toString : function() {
-      var selectorStr = rwt.theme.StyleUtil.createSelectorString( this._selectorArr, true );
+      var selectorStr = this.selector.toString( true );
       var result = [ selectorStr + " {\n" ];
       for( var property in this.attributes ) {
         var cssValue = StyleUtil.toCssString( property, this.get( property ) );
         var cssProperty = StyleUtil.fixPropertyName( property );
-        if( property === "background-color" ) {
-//          console.log( this.selectorString, cssProperty, cssValue );
-        }
         if( cssValue != null && cssProperty != null ) {
           result.push( "  ", cssProperty, ": ", cssValue, ";\n" );
         }

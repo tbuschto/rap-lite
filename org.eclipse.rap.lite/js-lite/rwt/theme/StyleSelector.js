@@ -4,28 +4,155 @@
   namespace( "rwt.theme" );
 
   /**
-   *
-   * @param {string|StyleSelectorItem|[(string|StyleSelectorItem)*]} arg
+   *                classes,   items,     selectores
+   * @param {string|[class*]|[[class*]*|[[[classes]*]*]*} arg
    * @returns {}
    */
   rwt.theme.StyleSelector = function( arg ) {
-    this._items = _.isArray( arg ) ? arg.concat() : [ arg ];
+    this._selectorList = this._createSelectorsArray( arg );
   };
 
   rwt.theme.StyleSelector.prototype = {
 
-    getItem : function( index ) {
-      return this._items[ index ];
+    toString : function( forBrowser ) {
+      var result = [];
+      for( var i = 0; i < this._selectorList.length; i++ ) {
+        result.push( this._selectorToString( this._selectorList[ i ] ) );
+      }
+      return result.join( ", " );
     },
 
-    toString : function( forBrowser ) {
-      var result = forBrowser ? [ "." + rwt.theme.StyleUtil.DISPLAY_CLASS ] : [];
-      _.forEach( this._items, function( item ) {
-        result.push( item.toString( forBrowser ) );
+    clone : function( mod ) {
+      var result = cloneArrayDeep( this._selectorList );
+      _.forEach( result, function( selector ) {
+        _.forEach( selector, function( item ) {
+          modSelectorItem( item, mod );
+        } );
+        modSelector( selector, mod );
       } );
+      return result;
+    },
+
+    getFirstElement : function() {
+      return this._selectorList[ 0 ][ 0 ][ 0 ];
+    },
+
+    _selectorToString : function( elements, forBrowser ) {
+      var result = forBrowser ? [ "." + rwt.theme.StyleUtil.DISPLAY_CLASS ] : [];
+      for( var i = 0; i < elements.length; i++ ) {
+        result.push( elements[ i ].join( "" ) );
+      }
       return result.join( " " );
+    },
+
+    _createSelectorsArray : function( arg ) {
+      var result;
+      if( _.isString( arg ) ) {
+        result = this._selectorFromString( arg );
+      } else if( _.isArray( arg ) && arg.length > 0 ) {
+        if( _.isArray( arg[ 0 ] ) ) {
+          if( _.isArray( arg[ 0 ][ 0 ] ) ) {
+            result = []; // first layer(list) is assumed to be already sorted
+            for( var i = 0; i < arg.length; i++ ) {
+              result[ i ] = this._sortClassesInElements( arg[ i ] );
+            }
+          } else {
+            result = [ this._sortClassesInElements( arg ) ];
+          }
+        } else { // array of elements
+          result = [ [ this._sortClasses( arg.concat() ) ] ];
+        }
+      } else {
+        throw new Error( "Invalid selector input" );
+      }
+      return result;
+    },
+
+    _selectorFromString : function( str ) {
+//      var result = str.split( "," );
+//      for( var i = 0; i < result.length; i++ ) {
+//        // TODO
+//      }
+      return [ [ [ str ] ] ];
+    },
+
+    _sortClassesInElements : function( elements ) {
+      var result = [];
+      for( var i = 0; i < elements.length; i++ ) {
+        result[ i ] = this._sortClasses( elements[ i ].concat() );
+      }
+      return result;
+    },
+
+    _sortClasses : function( arr ) {
+      var el = null;
+      if( isElement( arr[ 0 ] ) ) {
+        el = arr.shift();
+      }
+      var result = arr.sort();
+      if( el ) {
+        result.unshift( el );
+      }
+      return result;
     }
 
+
+  };
+
+  rwt.theme.StyleSelector.fromTheme = function( element, conditions ) {
+    var classes = [ "." + element ];
+    for( var i = 0; i < conditions.length; i++ ) {
+      var condition = conditions[ i ];
+      if( !pseudoClasses[ condition ] ) {
+        var firstChar = condition.charAt( 0 );
+        if( firstChar === "[" || firstChar === ":" ) {
+          condition = "." + condition.slice( 1 );
+        }
+      }
+      classes.push( condition );
+    }
+    return new rwt.theme.StyleSelector( classes );
+  };
+
+  var pseudoClasses = {
+    ":pressed" : true, // converted to active on render
+    ":hover" : true,
+    ":active" : true,
+    ":disabled" : true
+  };
+
+  var cloneArrayDeep = function( arr ) {
+    var result  = arr.concat();
+    for( var i = 0; i < result.length; i++ ) {
+      if( _.isArray( result[ i ] ) ) {
+        result[ i ] = cloneArrayDeep( result[ i ] );
+      }
+    }
+    return result;
+  };
+
+  var modSelector = function( selector, mod ) {
+    if( mod.addChildItem ) {
+      selector.push( mod.addChildItem );
+    }
+  };
+
+  var modSelectorItem = function( item, mod ) {
+    if( mod.replaceElement ) {
+      if( isElement( item[ 0 ] ) ) {
+        item[ 0 ] = mod.replaceElement;
+      } else {
+        item.unshift( mod.replaceElement );
+      }
+    }
+  };
+
+  var isElement = function( str ) {
+    var firstChar = str.charAt( 0 );
+    var secondChar = str.charAt( 1 );
+    var firstIsClass = firstChar === "." || firstChar === ":";
+    var firstIsPseudoElement = firstChar === "." && secondChar === secondChar.toUpperCase();
+    return !firstIsClass || firstIsPseudoElement;
   };
 
 }());

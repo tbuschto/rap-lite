@@ -39,8 +39,8 @@
           var conditionalValues = props[ property ];
           for( var i = 0; i < conditionalValues.length; i++ ) {
             var condValue = conditionalValues[ i ];
-            var selectorItem = rwt.theme.StyleSelectorItem.fromTheme( element, condValue[ 0 ] );
-            var rule = result.getRule( selectorItem );
+            var selector = rwt.theme.StyleSelector.fromTheme( element, condValue[ 0 ] );
+            var rule = result.getRule( selector );
             var value  = this._resolveValue( property, condValue[ 1 ], theme );
             if( property === "background-image" ) {
               if( value ) {

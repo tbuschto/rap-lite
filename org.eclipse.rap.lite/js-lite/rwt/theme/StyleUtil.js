@@ -40,28 +40,9 @@
       return result.join( ", " );
     },
 
-    /**
-     * item: String/StyleSelectorItem
-     * item1 -> item1
-     * [ item1, item2, item3 ] -> item1 item2 item3
-     * [ [ item1, item2 ],[ item3, item4 ] ] -> item1 item2, item3 item4
-     * [ item1, [ item2, item3 ], item4 ] -> illegal
-     */
-    createSelectorsArray : function( arg ) {
-      var result;
-      if( _.isArray( arg ) ) {
-        result = arg.concat();  // arg is alreay selector array
-      } else if( arg instanceof rwt.theme.StyleSelector ) {
-        result = [ arg ];
-      } else {
-        result = [ new rwt.theme.StyleSelector( arg ) ]; // arg is string or item
-      }
-      return result;
-    },
-
     addRulesToSheet : function( styleSheet, rules, filter ) {
       _.forEach( rules, function( rule ) {
-        var selector = rule.getSelector();
+        var selector = rule.selector;
         var newRule = new rwt.theme.StyleRule( selector, _.pick( rule.attributes, filter ) );
         styleSheet.addRule( newRule );
       } );
@@ -71,11 +52,10 @@
       _.forEach( rules, function( rule ) {
         var bgImage = rule.get( "background-image" );
         if( bgImage ) {
-          var selectorItem = rule.getSelector( 0 ).getItem( 0 );
-          var newSelector = new StyleSelector( [
-            new StyleSelectorItem( widgetClass, selectorItem.getClasses() ),
-            selectorItem.element
-          ] );
+          var newSelector = rule.selector.clone( {
+            replaceElement : widgetClass,
+            addChildItem : [ rule.selector.getFirstElement() ]
+          } );
           styleSheet.getRule( newSelector ).set( {
             "background-image" : bgImage,
             "width" : bgImage[ 1 ],
@@ -87,7 +67,7 @@
 
     parseSpacing : function( styleSheet, rules, subWidgets ) {
       _.forEach( rules, function( rule ) {
-        var selector = rule.getSelector();
+        var selector = rule.selector;
         if( rule.has( "spacing" ) ) {
           styleSheet.getRule( subWidgets ).set( {
             "margin-right" : rule.get( "spacing" )
