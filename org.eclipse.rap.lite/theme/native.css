@@ -10,7 +10,7 @@
  ******************************************************************************/
 
 Button[PUSH].native, Button[TOGGLE].native {
-  border : 2px outset; /* windows default, is not rendered in modern look otherwise */
+  border : 3px outset; /* IE8 default, may be less on other browser */
   padding : 6px 15px;
   spacing : 14px; /* split evenly as left/right padding of an image */
 }

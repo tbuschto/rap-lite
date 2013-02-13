@@ -29,7 +29,7 @@
   rwt.theme.ThemeStore.add( {
 
     "Label" : function( styleSheet, rules ) {
-      var supported = [ "background-color", "border", "padding", "font" ];
+      var supported = [ "background-color", "border", "padding", "font", "cursor" ];
       rwt.theme.StyleUtil.addRulesToSheet( styleSheet, rules, supported );
     }
 
