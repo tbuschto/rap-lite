@@ -1,6 +1,5 @@
-native buttons
 stacked composites
-minimal list 
+minimal list
 free floating ("hijacked") shells
 list with animations, slim scroll, virtual rendering
 

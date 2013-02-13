@@ -50,6 +50,7 @@
     _selectorToString : function( elements, forBrowser ) {
       var result = forBrowser ? [ "." + rwt.theme.StyleUtil.DISPLAY_CLASS ] : [];
       for( var i = 0; i < elements.length; i++ ) {
+        rwt.theme.StyleUtil.fixSelector( elements[ i ] );
         result.push( elements[ i ].join( "" ) );
       }
       return result.join( " " );

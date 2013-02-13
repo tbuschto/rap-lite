@@ -15,9 +15,9 @@
   } );
 
   rwt.views.ViewProviderRegistry.add( {
-    model : "rwt.model.Shell",
+    model : "rwt.widgets.Shell",
     create : function( model ) {
-      return new rwt.views.ShellView( model );
+      return new rwt.views.ShellView( { "model" : model } );
     }
   } );
 

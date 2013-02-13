@@ -3,9 +3,11 @@ package org.eclipse.rap.lite;
 import org.eclipse.rap.rwt.RWT;
 import org.eclipse.rap.rwt.application.AbstractEntryPoint;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -20,6 +22,29 @@ public class RapLiteEntryPoint extends AbstractEntryPoint {
 
   @Override
   protected void createContents( Composite parent ) {
+    StackLayout stack = new StackLayout();
+    parent.setLayout( stack );
+    Composite layer1 = new Composite( parent, SWT.NONE );
+    stack.topControl = layer1;
+    parent.layout();
+    createButtons( layer1 );
+    getShell().addControlListener( new ControlListener() {
+
+      @Override
+      public void controlResized( ControlEvent e ) {
+        getShell().layout();
+      }
+
+      @Override
+      public void controlMoved( ControlEvent e ) {
+        // TODO Auto-generated method stub
+      }
+    } );
+  }
+
+
+  protected void createButtons( Composite parent ) {
+    parent.setLayout( new GridLayout() );
     final Label label = new Label( parent, SWT.WRAP );
     label.setText( "Using " + RWT.getClient().getClass().getCanonicalName() );
     label.setLayoutData( new GridData( SWT.FILL, SWT.TOP, true, false ) );
@@ -74,18 +99,6 @@ public class RapLiteEntryPoint extends AbstractEntryPoint {
         if( radioB.getSelection() ) {
           label.setText( "Option B" );
         }
-      }
-    } );
-    getShell().addControlListener( new ControlListener() {
-
-      @Override
-      public void controlResized( ControlEvent e ) {
-        getShell().layout();
-      }
-
-      @Override
-      public void controlMoved( ControlEvent e ) {
-        // TODO Auto-generated method stub
       }
     } );
   }

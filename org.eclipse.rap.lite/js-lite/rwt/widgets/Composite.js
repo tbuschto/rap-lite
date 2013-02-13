@@ -3,9 +3,9 @@
 
   namespace( "rwt.widgets" );
 
-  rwt.widgets.Shell = rwt.widgets.Control.extend( {
+  rwt.widgets.Composite = rwt.widgets.Control.extend( {
 
-    name : "Shell",
+    name : "Composite",
 
     defaults : {
       children : []
@@ -21,14 +21,14 @@
 
   } );
 
-  rwt.remote.HandlerRegistry.add( "rwt.widgets.Shell", {
+  rwt.remote.HandlerRegistry.add( "rwt.widgets.Composite", {
 
     factory : function( properties ) {
-      var model = new rwt.widgets.Shell(
+      var model = new rwt.widgets.Composite(
         _.pick( properties, [ "parent", "style", "customVariant" ] ),
         { parse : true }
       );
-      model.view = rwt.views.ViewFactory.createView( "rwt.widgets.Shell", model );
+      model.view = rwt.views.ViewFactory.createView( "rwt.widgets.Composite", model );
       return model;
     },
 
