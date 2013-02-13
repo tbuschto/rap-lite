@@ -10,7 +10,7 @@
 
   rwt.views.ButtonView = rwt.views.ControlView.extend( {
 
-    name : "Button",
+    name : "ButtonView",
 
     events : {
       "click" : "select"
@@ -21,7 +21,7 @@
         this.renderContent( this.$el, this.model, changes );
       }
       if( changes.selection ) {
-       this.renderStates( this.$el, this.model );
+        this.renderStates( this.$el, this.model );
       }
     },
 
@@ -59,14 +59,24 @@
 
     "Button" : function( styleSheet, rules ) {
       var filter = [
-        "background-color", "border", "padding", "font", "cursor", "background", "border-radius", "color"
+        "background-color",
+        "border",
+        "padding",
+        "font",
+        "cursor",
+        "background",
+        "border-radius",
+        "color"
       ];
       var subWidgets = [
-        [ [ ".Button-Text"]  ], [ [ ".Button-Image" ] ], [ [ ".Button-CheckIcon" ] ], [ [ ".Button-RadioIcon" ] ]
+        [ [ ".ButtonView" ],[ ".Button-Text" ]  ],
+        [ [ ".ButtonView" ],[ ".Button-Image" ] ],
+        [ [ ".ButtonView" ],[ ".Button-CheckIcon" ] ],
+        [ [ ".ButtonView" ],[ ".Button-RadioIcon" ] ]
       ];
-      StyleUtil.addRulesToSheet( styleSheet, rules, filter );
+      styleSheet.addRules( rules, { "addClass" : ".ButtonView" }, filter );
       StyleUtil.parseSpacing( styleSheet, rules, subWidgets );
-      styleSheet.getRule( ".Button" ).set( {
+      styleSheet.getRule( ".ButtonView" ).set( {
         "user-select" : "none",
         "white-space" : "nowrap"
       } );
@@ -77,11 +87,11 @@
     },
 
     "Button-CheckIcon" : function( styleSheet, rules ) {
-      StyleUtil.parseIconRules( styleSheet, rules, ".Button" );
+      StyleUtil.parseIconRules( styleSheet, rules, ".Button", ".ButtonView" );
     },
 
     "Button-RadioIcon" : function( styleSheet, rules ) {
-      StyleUtil.parseIconRules( styleSheet, rules, ".Button" );
+      StyleUtil.parseIconRules( styleSheet, rules, ".Button", ".ButtonView" );
     }
 
   } );

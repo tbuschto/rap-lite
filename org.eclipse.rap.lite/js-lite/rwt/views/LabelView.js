@@ -5,7 +5,7 @@
 
   rwt.views.LabelView = rwt.views.ControlView.extend( {
 
-    name : "Label",
+    name : "LabelView",
 
     renderChanges : function( changes ) {
       if( changes.text || changes.image || changes.alignment ) {
@@ -30,7 +30,7 @@
 
     "Label" : function( styleSheet, rules ) {
       var supported = [ "background-color", "border", "padding", "font", "cursor" ];
-      rwt.theme.StyleUtil.addRulesToSheet( styleSheet, rules, supported );
+      styleSheet.addRules( rules, { "addClass" : ".LabelView" }, supported );
     }
 
   } );

@@ -9,6 +9,9 @@
       if( attr.style ) {
         attr.style = parseStyle( attr.style );
       }
+      if( attr.customVariant ) {
+        attr.customVariant = attr.customVariant.slice( 8 );
+      }
       return attr;
     },
 

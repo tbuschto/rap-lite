@@ -5,6 +5,8 @@
 
   rwt.widgets.Button = rwt.widgets.Control.extend( {
 
+    name : "Button",
+
     defaults : {
       "selection" : false
     },

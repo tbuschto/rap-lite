@@ -5,6 +5,8 @@
 
   rwt.widgets.Shell = rwt.widgets.Control.extend( {
 
+    name : "Shell",
+
     defaults : {
       children : []
     },
@@ -23,7 +25,7 @@
 
     factory : function( properties ) {
       var model = new rwt.widgets.Shell(
-        _.pick( properties, [ "parent", "style" ] ),
+        _.pick( properties, [ "parent", "style", "customVariant" ] ),
         { parse : true }
       );
       var view = new rwt.views.ShellView( {

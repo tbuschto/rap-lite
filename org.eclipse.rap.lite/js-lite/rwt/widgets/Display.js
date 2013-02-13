@@ -52,7 +52,7 @@
     },
 
     _onSelection : function( event ) {
-      event.preventDefault();  // TODO : use jquery, make cross-browser
+      event.preventDefault();
     }
 
   };

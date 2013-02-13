@@ -27,6 +27,17 @@
       return this._rules[ selectorStr ];
     },
 
+    addRules : function( rules, selectorMod, propertyFilter, callback ) {
+      for( var i = 0; i < rules.length; i++ ) {
+        var rule = rules[ i ];
+        var selector = selectorMod ? rule.selector.clone( selectorMod ) : rule.selector;
+        this.getRule( selector ).set( _.pick( rule.attributes, propertyFilter || {} ) );
+        if( callback ) {
+          callback( this.getRule( selector ) );
+        }
+      }
+    },
+
     addRule : function( rule ) {
       var selectorStr = rule.selectorString;
       if( this._rules[ selectorStr ] ) {
@@ -47,7 +58,6 @@
         }
       } );
       var result = "\n" + sheet.join( "\n\n" ) + "\n";
-      //console.log( result );
 
       var styleEl = document.createElement( 'style' ); // USE JQUERY
       styleEl.type = "text/css";

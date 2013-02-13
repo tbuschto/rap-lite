@@ -44,7 +44,6 @@ public class RapLiteServlet extends HttpServlet {
     "rwt/remote/RemoteObjectFactory.js",
     "rwt/remote/handler/TextSizeMeasurementHandler.js",
     "rwt/theme/ThemeStore.js",
-    //"rwt/theme/StyleSelectorItem.js",
     "rwt/theme/StyleSelector.js",
     "rwt/theme/StyleUtil.js",
     "rwt/theme/StyleSheet.js",

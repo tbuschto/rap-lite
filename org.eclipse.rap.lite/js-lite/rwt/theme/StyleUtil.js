@@ -40,20 +40,13 @@
       return result.join( ", " );
     },
 
-    addRulesToSheet : function( styleSheet, rules, filter ) {
-      _.forEach( rules, function( rule ) {
-        var selector = rule.selector;
-        var newRule = new rwt.theme.StyleRule( selector, _.pick( rule.attributes, filter ) );
-        styleSheet.addRule( newRule );
-      } );
-    },
-
-    parseIconRules : function( styleSheet, rules, widgetClass ) {
+    parseIconRules : function( styleSheet, rules, widgetClass, viewClass ) {
       _.forEach( rules, function( rule ) {
         var bgImage = rule.get( "background-image" );
         if( bgImage ) {
           var newSelector = rule.selector.clone( {
             replaceElement : widgetClass,
+            addClass : viewClass,
             addChildItem : [ rule.selector.getFirstElement() ]
           } );
           styleSheet.getRule( newSelector ).set( {
@@ -184,7 +177,7 @@
         if( font.bold ) {
           result.push( "bold" );
         }
-        if( font.italc ) {
+        if( font.italic ) {
           result.push( "italic" );
         }
         result.push( font.size + "px" );

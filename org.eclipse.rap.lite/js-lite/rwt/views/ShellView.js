@@ -5,7 +5,7 @@
 
   rwt.views.ShellView = rwt.views.ControlView.extend( {
 
-    name : "Shell",
+    name : "ShellView",
 
     applyParent : function() {
       var parent = rwt.widgets.Display.getCurrent().el;
@@ -25,7 +25,7 @@
 
     "Shell" : function( styleSheet, rules ) {
       var supported = [ "background-color", "border", "padding", "font" ];
-      rwt.theme.StyleUtil.addRulesToSheet( styleSheet, rules, supported );
+      styleSheet.addRules( rules, { "addClass" : ".ShellView" }, supported );
     }
 
   } );

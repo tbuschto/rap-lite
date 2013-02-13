@@ -17,7 +17,7 @@
     toString : function( forBrowser ) {
       var result = [];
       for( var i = 0; i < this._selectorList.length; i++ ) {
-        result.push( this._selectorToString( this._selectorList[ i ] ) );
+        result.push( this._selectorToString( this._selectorList[ i ], forBrowser ) );
       }
       return result.join( ", " );
     },

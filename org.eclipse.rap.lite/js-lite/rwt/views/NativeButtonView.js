@@ -5,13 +5,11 @@
 
   var ImageTemplate = rwt.templates.ImageTemplate;
   var ButtonTemplate = rwt.templates.ButtonTemplate;
-  var CheckBoxTemplate = rwt.templates.CheckBoxTemplate;
-  var RadioButtonTemplate = rwt.templates.RadioButtonTemplate;
   var StyleUtil = rwt.theme.StyleUtil;
 
   rwt.views.NativeButtonView = rwt.views.ControlView.extend( {
 
-    name : "NativeButton native", //fix
+    name : "NativeButtonView",
 
     events : {
       "click button" : "select"
@@ -21,22 +19,25 @@
       if( changes.text || changes.image ) {
         this.renderContent( this.$el, this.model, changes );
       }
+      if( changes.selection ) {
+        this.renderStates( this.$el, this.model );
+      }
+    },
+
+    renderStates : function( el, model ) {
+      el.toggleClass( "selected", model.get( "selection" ) );
     },
 
     renderContent : function( el, model ) {
       el.empty();
       el.append(
           ImageTemplate.render( 'Button-Image', model.get( "image" ) )
-        + ButtonTemplate.render( model.get( "text" ) )
+        + ButtonTemplate.render( 'Button-Text', model.get( "text" ) )
       );
     },
 
     select : function() {
       this.model.select();
-    },
-
-    getNativeTemplate : function( style ) {
-      return style.PUSH ? ButtonTemplate : style.RADIO ? RadioButtonTemplate : CheckBoxTemplate;
     }
 
   } );
@@ -44,7 +45,8 @@
   rwt.views.ViewProviderRegistry.add( {
     model : "rwt.widgets.Button",
     accept : function( model ) {
-      return model.get( "customVariant" ) === "variant_native" && model.style.PUSH;
+      return    ( model.style.PUSH || model.style.TOGGLE )
+             && model.get( "customVariant" ) === "native";
     },
     create : function( model ) {
       return new rwt.views.NativeButtonView( { "model" : model } );
@@ -54,23 +56,21 @@
   rwt.theme.ThemeStore.add( {
 
     "Button" : function( styleSheet, rules ) {
-      var buttonFilter = [ "font", "cursor", "color" ];
+      var buttonFilter = [ "cursor", "font", "color", "padding" ];
       var subwidgets = [
-        [ [ ".NativeButton" ], [ "button" ] ],
-        [ [ ".NativeButton" ], [ "Button-Image" ] ]
+        [ [ ".NativeButtonView" ], [ ".Button-Text" ] ],
+        [ [ ".NativeButtonView" ], [ ".Button-Image" ] ]
       ];
-      // label cursor!
-      for( var i = 0; i < rules.length; i++ ) {
-        var selector = rules[ i ].selector.clone( {
-          replaceElement : ".NativeButton",
-          addChildItem : [ "button" ]
-        } );
-        styleSheet.getRule( selector ).set( _.pick( rules[ i ].attributes, buttonFilter ) );
-      }
-      styleSheet.getRule( ".NativeButton" ).set( {
+      var selectorMod = {
+        addClass : ".NativeButtonView",
+        addChildItem : [ ".Button-Text" ]
+      };
+      styleSheet.addRules( rules, selectorMod, buttonFilter );
+      styleSheet.getRule( ".NativeButtonView" ).set( {
         "user-select" : "none",
         "white-space" : "nowrap"
       } );
+      StyleUtil.parseSpacing( styleSheet, rules, subwidgets );
       styleSheet.getRule( subwidgets[ 0 ] ).set( {
         height : "100%"
       } );
@@ -78,7 +78,7 @@
         "display" : "inline-block",
         "vertical-align" : "middle"
       } );
-      }
+    }
 
   } );
 

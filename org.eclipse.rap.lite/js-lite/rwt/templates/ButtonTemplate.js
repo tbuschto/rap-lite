@@ -6,17 +6,18 @@
   rwt.templates.ButtonTemplate = {
 
     buttonTemplate : _.template(
-      "<button><%=data.text%></button>",
+      "<button class='<%=data.classAttr%>'><%=data.text%></button>",
       null,
       { "variable" : "data" }
     ),
 
-    render : function( text ) {
+    render : function( classAttr, text ) {
       if( !text ) {
         return "";
       }
       return this.buttonTemplate( {
-        "text" : text
+        "text" : text,
+        "classAttr" : classAttr ? classAttr : ""
       } );
     }
 

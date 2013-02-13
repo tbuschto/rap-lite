@@ -5,13 +5,13 @@
 
   rwt.views.ControlView = Backbone.View.extend( {
 
-    name : "Control",
+    name : "ControlView",
 
     className : function() {
-      var result = [];
+      var result = [ this.model.name ];
       var proto = this.constructor.prototype;
       while( proto ) {
-        if( proto.name ) { // TODO : needs to be own property
+        if( proto.name ) {
           result.push( proto.name );
         }
         proto = proto.constructor ? proto.constructor.__super__ : null;
@@ -28,6 +28,7 @@
       this.applyParent();
       this.applyCssClasses();
       this.model.on( "change:bounds", this.renderBounds, this );
+      this.model.on( "change:customVariant", this.renderCustomVariant, this );
       this.model.on( "change", this.render, this );
     },
 
@@ -51,7 +52,18 @@
       } );
     },
 
+    renderCustomVariant : function( model, value ) {
+      var oldValue = model.previous( "customVariant" );
+      if( oldValue ) {
+        this.$el.removeClass( value );
+      }
+      if( value ) {
+        this.$el.addClass( value );
+      }
+    },
+
     applyCssClasses : function() {
+      this.renderCustomVariant( this.model, this.model.get( "customVariant" ) );
       for( var style in this.model.style ) {
         this.$el.addClass( style );
       }
@@ -69,7 +81,7 @@
 
   rwt.theme.ThemeStore.add( {
     "Control" : function( styleSheet ) {
-      var rule = styleSheet.getRule( ".Control" );
+      var rule = styleSheet.getRule( ".ControlView" );
       rule.set( {
         "position" : "absolute",
         "overflow" : "hidden"
