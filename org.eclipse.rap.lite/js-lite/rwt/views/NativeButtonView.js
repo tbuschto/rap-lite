@@ -11,7 +11,7 @@
 
   rwt.views.NativeButtonView = rwt.views.ControlView.extend( {
 
-    name : "NativeButton",
+    name : "NativeButton native", //fix
 
 //    events : {
 //      "click" : "select"
@@ -30,7 +30,7 @@
       el.empty();
       el.append(
           ImageTemplate.render( 'Button-Image', model.get( "image" ) )
-        + ButtonTemplate.render( 'Button-Text', model.get( "text" ) )
+        + ButtonTemplate.render( model.get( "text" ) )
       );
     },
 
@@ -58,45 +58,37 @@
     }
   } );
 
-//  rwt.theme.ThemeStore.add( {
-//
-//    "Button" : function( styleSheet, rules ) {
-//      var buttonFilter = [
-//        "border", "padding", "font", "cursor", "color"
-//      ];
-////      StyleUtil.addRulesToSheet( styleSheet, rules, filter );
-////      StyleUtil.parseSpacing( styleSheet, rules, subWidgets );
-//      for( var i = 0; i < rules.length; i++ ) {
-//        var selector = rules[ i ].getSelector().clone( {
-//          addClass : ".native",
-//          addChild : "button"
-//        } );
-//        styleSheet.getRule( selector ).set( _.pick( rules[ i ].attributes, buttonFilter ) );
-//      }
-//      styleSheet.getRule( ".Button", [ ".native" ] ).set( {
-//        "user-select" : "none",
-//        "white-space" : "nowrap"
-//      } );
-//      var selector = new rwt.theme.StyleSelector( [
-//        new rwt.theme.StyleSelectorItem( ".Button", [ ".native" ] ),
-//        new rwt.theme.StyleSelectorItem( ".Button-Image" )
-//      ] );
-//      styleSheet.getRule( selector ).set( {
-//      } );
-//      styleSheet.getRule( ".Button", [ ".native" ] ).set( {
-//        "user-select" : "none",
-//        "white-space" : "nowrap"
-//      } );
-//    },
-//
-//    "Button-CheckIcon" : function( styleSheet, rules ) {
-//      StyleUtil.parseIconRules( styleSheet, rules, ".Button" );
-//    },
-//
-//    "Button-RadioIcon" : function( styleSheet, rules ) {
-//      StyleUtil.parseIconRules( styleSheet, rules, ".Button" );
-//    }
-//
-//  } );
+  rwt.theme.ThemeStore.add( {
+
+    "Button" : function( styleSheet, rules ) {
+      var buttonFilter = [
+        "font", "cursor", "color"
+      ];
+      // label cursor!
+      for( var i = 0; i < rules.length; i++ ) {
+        var selector = rules[ i ].selector.clone( {
+          replaceElement : ".NativeButton",
+          addChildItem : [ "button" ]
+        } );
+        var newRule = styleSheet.getRule( selector );
+        newRule.set( _.pick( rules[ i ].attributes, buttonFilter ) );
+        if( rules[ i ].attributes.border ) {
+          newRule.set( "border-width", rules[ i ].attributes.border.width );
+        }
+      }
+      styleSheet.getRule( ".NativeButton" ).set( {
+        "user-select" : "none",
+        "white-space" : "nowrap"
+      } );
+      styleSheet.getRule( [ [ ".NativeButton" ], [ "button" ] ] ).set( {
+        height : "100%"
+      } );
+      styleSheet.getRule( [ [ ".NativeButton" ], [ "*" ] ] ).set( {
+        "display" : "inline-block",
+        "vertical-align" : "middle"
+      } );
+      }
+
+  } );
 
 }());

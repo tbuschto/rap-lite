@@ -21,7 +21,7 @@
     }
   } );
 
-  rwt.theme.ThemeStore.set( {
+  rwt.theme.ThemeStore.add( {
 
     "Shell" : function( styleSheet, rules ) {
       var supported = [ "background-color", "border", "padding", "font" ];

@@ -67,7 +67,7 @@
 
   } );
 
-  rwt.theme.ThemeStore.set( {
+  rwt.theme.ThemeStore.add( {
     "Control" : function( styleSheet ) {
       var rule = styleSheet.getRule( ".Control" );
       rule.set( {

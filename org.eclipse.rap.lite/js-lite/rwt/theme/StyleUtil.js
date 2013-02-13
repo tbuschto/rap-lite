@@ -164,11 +164,14 @@
         }
         return result;
       },
-      "width" : function( px ) {
+      "width" : function( value ) {
+        return numericConvert( value );
+      },
+      "border-width" : function( px ) {
         return px + "px";
       },
-      "height" : function( px ) {
-        return px + "px";
+      "height" : function( value ) {
+        return numericConvert( value );
       },
       "padding" : function( padding ) {
         return padding.join( "px " ) + "px";
@@ -236,6 +239,14 @@
       return result.join("");
     }
 
+  };
+
+  var numericConvert = function( value ) {
+    if( _.isString( value ) ) {
+      return value;
+    } else {
+      return value + "px";
+    }
   };
 
   rwt.theme.StyleUtil._init();

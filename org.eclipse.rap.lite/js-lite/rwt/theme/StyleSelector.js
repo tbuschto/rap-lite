@@ -22,6 +22,16 @@
       return result.join( ", " );
     },
 
+    hasClass : function( str ) {
+      return _.flatten( this._selectorList ).indexOf( str ) != -1;
+    },
+
+    /**
+     *
+     * mod.addChildItem : [ element ] // note affected by other mods
+     * mod.ReplaceElement : string
+     * mod.addClass : string
+     */
     clone : function( mod ) {
       var result = cloneArrayDeep( this._selectorList );
       _.forEach( result, function( selector ) {
@@ -144,6 +154,9 @@
       } else {
         item.unshift( mod.replaceElement );
       }
+    }
+    if( mod.addClass ) {
+      item.push( mod.addClass );
     }
   };
 

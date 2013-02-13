@@ -55,7 +55,7 @@
     }
   } );
 
-  rwt.theme.ThemeStore.set( {
+  rwt.theme.ThemeStore.add( {
 
     "Button" : function( styleSheet, rules ) {
       var filter = [

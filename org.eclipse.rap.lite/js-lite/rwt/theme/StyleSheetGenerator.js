@@ -22,10 +22,13 @@
 
     generateFromTheme : function( theme ) {
       var styleSheet = new rwt.theme.StyleSheet();
-      var parser = rwt.theme.ThemeStore.attributes;
+      var parser = rwt.theme.ThemeStore.getAllParser();
       for( var element in parser ) {
         var widgetSheet = this._createWidgetSheet( theme, element );
-        parser[ element ]( styleSheet, widgetSheet ? widgetSheet.getRules() : null );
+        var parserList = parser[ element ];
+        for( var i = 0; i < parserList.length; i++ ) {
+          parserList[ i ]( styleSheet, widgetSheet ? widgetSheet.getRules() : null );
+        }
       }
       styleSheet.render();
     },
