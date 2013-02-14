@@ -24,13 +24,16 @@
     },
 
     initializeControl : function() {
+      this.effects = {};
       rwt.theme.StyleUtil.applyBrowserFixes( this.$el );
       this.applyParent();
       this.applyCssClasses();
       this.model.on( "change:bounds", this.renderBounds, this );
       this.model.on( "change:visibility", this.renderVisibility, this );
+      this.model.on( "change:background", this.renderBackground, this );
       this.model.on( "change:customVariant", this.renderCustomVariant, this );
       this.model.on( "change", this.render, this );
+      rwt.effects.EffectsRegistry.hook( this );
     },
 
     render : function() {
@@ -61,10 +64,17 @@
       if( value ) {
         this.$el.addClass( value );
       }
+      rwt.effects.EffectsRegistry.hook( this );// TODO:re-name/design
     },
 
     renderVisibility : function( model, value ) {
+      this.trigger( value ? "effect:appear" : "effect:disappear", this );
       this.$el.css( "display", value ? "" : "none" );
+    },
+
+    renderBackground : function( model, value ) {
+      var cssValue = value ? rwt.theme.StyleUtil.toCssString( "background-color", value ) : "";
+      this.$el.css( "background-color", cssValue );
     },
 
     applyCssClasses : function() {
@@ -80,6 +90,7 @@
       } else {
         this.$el.append( child );
       }
+      this.trigger( "append", child );
     }
 
   } );

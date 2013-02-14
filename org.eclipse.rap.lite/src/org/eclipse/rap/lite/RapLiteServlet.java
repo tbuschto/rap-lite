@@ -64,6 +64,8 @@ public class RapLiteServlet extends HttpServlet {
     "rwt/views/CompositeView.js",
     "rwt/views/NativeButtonView.js",
     "rwt/synchronizer/SelectionSynchronizer.js",
+    "rwt/effects/EffectsRegistry.js",
+    "rwt/effects/SwitchEffect.js",
     "rwt/widgets/Display.js",
     "rwt/widgets/Control.js",
     "rwt/widgets/Shell.js",

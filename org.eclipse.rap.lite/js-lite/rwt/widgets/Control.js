@@ -39,7 +39,7 @@
     "visibility",
     "enabled",
 //    "foreground",
-//    "background",
+    "background",
 //    "backgroundImage",
 //    "cursor",
     "customVariant",

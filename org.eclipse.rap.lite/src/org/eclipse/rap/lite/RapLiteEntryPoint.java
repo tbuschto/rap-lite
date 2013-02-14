@@ -4,8 +4,7 @@ import org.eclipse.rap.rwt.RWT;
 import org.eclipse.rap.rwt.application.AbstractEntryPoint;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
-import org.eclipse.swt.events.ControlEvent;
-import org.eclipse.swt.events.ControlListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -33,18 +32,20 @@ public class RapLiteEntryPoint extends AbstractEntryPoint {
     createButtons( layer1 );
     createOtherSide( layer2 );
     parent.layout();
-    getShell().addControlListener( new ControlListener() {
-
-      @Override
-      public void controlResized( ControlEvent e ) {
-        getShell().layout();
-      }
-
-      @Override
-      public void controlMoved( ControlEvent e ) {
-        // TODO Auto-generated method stub
-      }
-    } );
+    parent.setBackground( new Color( parent.getDisplay(), 100, 100, 100 ) );
+    parent.setData( RWT.CUSTOM_VARIANT, "stack" );
+//    getShell().addControlListener( new ControlListener() {
+//
+//      @Override
+//      public void controlResized( ControlEvent e ) {
+//        getShell().layout();
+//      }
+//
+//      @Override
+//      public void controlMoved( ControlEvent e ) {
+//        // TODO Auto-generated method stub
+//      }
+//    } );
   }
 
 
