@@ -34,7 +34,7 @@
 
     isPublic : true,
 
-    properties : [ "bounds", "children" ]
+    properties : rwt.widgets.Control.handlerProperties
 
   } );
 

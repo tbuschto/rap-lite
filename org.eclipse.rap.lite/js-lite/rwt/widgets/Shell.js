@@ -25,7 +25,7 @@
 
     factory : function( properties ) {
       var model = new rwt.widgets.Shell(
-        _.pick( properties, [ "parent", "style", "customVariant" ] ),
+        _.pick( properties, [ "parent", "style", "customVariant" ] ),// custom variant may be set later!
         { parse : true }
       );
       model.view = rwt.views.ViewFactory.createView( "rwt.widgets.Shell", model );
@@ -34,7 +34,7 @@
 
     isPublic : true,
 
-    properties : [ "bounds", "children" ]
+    properties : rwt.widgets.Control.handlerProperties
 
   } );
 

@@ -28,6 +28,7 @@
       this.applyParent();
       this.applyCssClasses();
       this.model.on( "change:bounds", this.renderBounds, this );
+      this.model.on( "change:visibility", this.renderVisibility, this );
       this.model.on( "change:customVariant", this.renderCustomVariant, this );
       this.model.on( "change", this.render, this );
     },
@@ -60,6 +61,10 @@
       if( value ) {
         this.$el.addClass( value );
       }
+    },
+
+    renderVisibility : function( model, value ) {
+      this.$el.css( "display", value ? "" : "none" );
     },
 
     applyCssClasses : function() {

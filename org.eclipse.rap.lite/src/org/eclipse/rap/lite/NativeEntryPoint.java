@@ -9,7 +9,7 @@ public class NativeEntryPoint extends RapLiteEntryPoint {
 
   @Override
   protected void createContents( Composite parent ) {
-    super.createContents( parent );
+    createButtons( parent );
     Control[] children = parent.getChildren();
     for( Control child : children ) {
       child.setData( RWT.CUSTOM_VARIANT, "native" );

@@ -32,6 +32,24 @@
 
   } );
 
+  rwt.widgets.Control.handlerProperties = [
+    "children",
+    //"tabIndex",
+    //"toolTip",
+    "visibility",
+    "enabled",
+//    "foreground",
+//    "background",
+//    "backgroundImage",
+//    "cursor",
+    "customVariant",
+//    "font",
+//    "menu",
+//    "activeKeys",
+//    "cancelKeys"
+    "bounds"
+  ];
+
   var parseStyle = function( stylesArr ) {
     var result = {};
     for( var i = 0; i < stylesArr.length; i++ ) {

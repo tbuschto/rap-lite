@@ -19,15 +19,20 @@ import org.eclipse.swt.widgets.Listener;
 public class RapLiteEntryPoint extends AbstractEntryPoint {
 
   private int nr;
+  private Composite layer1;
+  private Composite layer2;
+  private StackLayout stack;
 
   @Override
   protected void createContents( Composite parent ) {
-    StackLayout stack = new StackLayout();
+    stack = new StackLayout();
     parent.setLayout( stack );
-    Composite layer1 = new Composite( parent, SWT.NONE );
+    layer1 = new Composite( parent, SWT.NONE );
+    layer2 = new Composite( parent, SWT.NONE );
     stack.topControl = layer1;
-    parent.layout();
     createButtons( layer1 );
+    createOtherSide( layer2 );
+    parent.layout();
     getShell().addControlListener( new ControlListener() {
 
       @Override
@@ -40,6 +45,15 @@ public class RapLiteEntryPoint extends AbstractEntryPoint {
         // TODO Auto-generated method stub
       }
     } );
+  }
+
+
+  private void createOtherSide( Composite parent ) {
+    parent.setLayout( new GridLayout() );
+    final Label label = new Label( parent, SWT.WRAP );
+    label.setText( "Hello there!" );
+    label.setLayoutData( new GridData( SWT.FILL, SWT.TOP, true, false ) );
+    createLayerSwitch( parent );
   }
 
 
@@ -99,6 +113,20 @@ public class RapLiteEntryPoint extends AbstractEntryPoint {
         if( radioB.getSelection() ) {
           label.setText( "Option B" );
         }
+      }
+    } );
+    createLayerSwitch( parent );
+  }
+
+  private void createLayerSwitch( final Composite layer ) {
+    Button button = new Button( layer, SWT.PUSH );
+    button.setText( "Visit the other side" );
+    button.setLayoutData( new GridData( SWT.LEFT, SWT.TOP, true, false ) );
+    button.addListener( SWT.Selection, new Listener() {
+      @Override
+      public void handleEvent( Event event ) {
+        stack.topControl = layer == layer1 ? layer2 : layer1;
+        layer.getParent().layout();
       }
     } );
   }
