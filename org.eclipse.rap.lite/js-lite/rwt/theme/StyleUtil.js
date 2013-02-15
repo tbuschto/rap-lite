@@ -229,11 +229,15 @@
     _cssPropertyMapping : {
       "webkit" : {
         "user-select" : "-webkit-user-select",
-        "animation" : "-webkit-animation"
+        "animation" : "-webkit-animation",
+        "animation-fill-mode" : "-webkit-animation-fill-mode",
+        "transform" : "-webkit-transform"
       },
       "gecko" : {
         "user-select" : "-moz-user-select",
-        "animation" : "-moz-animation"
+        "animation" : "-moz-animation",
+        "animation-fill-mode" : "-moz-animation-fill-mode",
+        "transform" : "-moz-transform"
       }
     },
 
