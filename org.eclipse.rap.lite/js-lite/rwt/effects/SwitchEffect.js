@@ -56,4 +56,29 @@ namespace( "rwt.effects" );
     }
   } );
 
+  rwt.theme.ThemeStore.add( {
+
+    switchAni : function( styleSheet ) {
+      styleSheet.getRule( "@keyframes switchAppear" ).set( {
+        "from" : {
+          "transform" : "translate( 0%, 0 ) scale( 0.9 )",
+          "z-index" : 100
+        },
+        "40%" : {
+          "transform" : "translate( 55%, 0 ) scale( 0.9 )",
+          "z-index" : 100
+        },
+        "60%" : {
+          "transform" : "translate( 55%, 0 ) scale( 1 )",
+          "z-index" : 101
+        },
+        "to" : {
+          "transform" : "translate( 0%, 0 ) scale( 1 )",
+          "z-index" : 101
+        }
+      } );
+    }
+
+  } );
+
 }());

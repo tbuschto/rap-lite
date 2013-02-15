@@ -28,6 +28,7 @@
     }() ),
 
     _activeFix : Client.isMshtml() || Client.isNewMshtml(),
+    _keyframesPrefix : !Client.isMshtml(),
 
     createSelectorString : function( selectorArr, prefixed ) {
       if( selectorArr.length === 0 ) {
@@ -74,6 +75,9 @@
       if( this._cssStringCreator[ property ] ) {
         var result = this._cssStringCreator[ property ]( value );
       }
+      if( result instanceof Object ) {
+        result = this.ruleBodyToString( value, false, "  " );
+      }
       return result;
     },
 
@@ -82,8 +86,27 @@
       var map = this._cssPropertyMapping[ Client.getEngine() ];
       if( map && map[ property ] ) {
         result = map[ property ];
+      } else if( property.slice( 0, 10 ) === "@keyframes" ) {
+        result = "@keyframes";
       }
       return result;
+    },
+
+    ruleBodyToString : function( attributes, isKeyframes, indent ) {
+      var result = [ " {\n" ];
+      for( var property in attributes ) {
+        var cssValue = this.toCssString( property, attributes[ property ] );
+        var cssProperty = this.fixPropertyName( property );
+        if( cssValue != null && cssProperty != null ) {
+          if( isKeyframes ) {
+            result.push( indent, "  ", cssProperty, " ", cssValue, "\n" );
+          } else {
+            result.push( indent, "  ", cssProperty, ": ", cssValue, ";\n" );
+          }
+        }
+      }
+      result.push( indent + "}" );
+      return result.join( "" );
     },
 
     applyBrowserFixes : function( $el ) {
@@ -108,6 +131,11 @@
           selectorItemArray[ pressed ] = ":hover:active";
         }
       }
+    },
+
+    fixKeyframesSelector : function( str ) {
+      var prefix = this._keyframesPrefix ? this.BROWSER_PREFIX : "";
+      return "@" + prefix + str.slice( 1 );
     },
 
     _eventHandler : {
@@ -200,10 +228,12 @@
 
     _cssPropertyMapping : {
       "webkit" : {
-        "user-select" : "-webkit-user-select"
+        "user-select" : "-webkit-user-select",
+        "animation" : "-webkit-animation"
       },
       "gecko" : {
-        "user-select" : "-moz-user-select"
+        "user-select" : "-moz-user-select",
+        "animation" : "-moz-animation"
       }
     },
 

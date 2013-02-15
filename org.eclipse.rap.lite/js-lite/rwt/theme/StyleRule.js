@@ -18,17 +18,8 @@
     },
 
     toString : function() {
-      var selectorStr = this.selector.toString( true );
-      var result = [ selectorStr + " {\n" ];
-      for( var property in this.attributes ) {
-        var cssValue = StyleUtil.toCssString( property, this.get( property ) );
-        var cssProperty = StyleUtil.fixPropertyName( property );
-        if( cssValue != null && cssProperty != null ) {
-          result.push( "  ", cssProperty, ": ", cssValue, ";\n" );
-        }
-      }
-      result.push( "}" );
-      return result.join( "" );
+      return   this.selector.toString( true )
+             + StyleUtil.ruleBodyToString( this.attributes, this.selector.isKeyframes(), "" );
     }
 
   } );

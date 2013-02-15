@@ -47,13 +47,23 @@
       return this._selectorList[ 0 ][ 0 ][ 0 ];
     },
 
-    _selectorToString : function( elements, forBrowser ) {
-      var result = forBrowser ? [ "." + rwt.theme.StyleUtil.DISPLAY_CLASS ] : [];
-      for( var i = 0; i < elements.length; i++ ) {
-        rwt.theme.StyleUtil.fixSelector( elements[ i ] );
-        result.push( elements[ i ].join( "" ) );
+    isKeyframes : function() {
+      return this.getFirstElement().slice( 0, 10 ) === "@keyframes";
+    },
+
+    _selectorToString : function( elements, prefix ) {
+      var result;
+      if( this.isKeyframes() ) {
+        result = rwt.theme.StyleUtil.fixKeyframesSelector( this.getFirstElement() );
+      } else {
+        result = prefix ? [ "." + rwt.theme.StyleUtil.DISPLAY_CLASS ] : [];
+        for( var i = 0; i < elements.length; i++ ) {
+          rwt.theme.StyleUtil.fixSelector( elements[ i ] );
+          result.push( elements[ i ].join( "" ) );
+        }
+        result = result.join( " " );
       }
-      return result.join( " " );
+      return result;
     },
 
     _createSelectorsArray : function( arg ) {
