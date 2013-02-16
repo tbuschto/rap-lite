@@ -28,7 +28,9 @@
 
     getParent : function() {
       return rap.getObject( this.get( "parent" ) );
-    }
+    },
+
+    sync : function(){}
 
   } );
 

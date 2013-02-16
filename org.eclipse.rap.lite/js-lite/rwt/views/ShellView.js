@@ -8,8 +8,33 @@
     name : "ShellView",
 
     applyParent : function() {
-      var parent = rwt.widgets.Display.getCurrent().el;
-      this.$el.appendTo( parent );
+      var display = rwt.widgets.Display.getCurrent();
+      var externalParent = display.getShellExtractor()( this.model );
+      if( externalParent ) {
+        this.$el.appendTo( externalParent );
+        externalParent.addClass( rwt.theme.StyleUtil.DISPLAY_CLASS );
+        this.isExternal = true;
+        this.model.on( "destroy", function() {
+          externalParent.remove();
+        } );
+      } else {
+        this.$el.appendTo( display.el );
+      }
+    },
+
+    renderBounds : function( model, bounds ) {
+      this.$el.css( {
+        "left" : this.isExternal ? 0 : bounds[ 0 ],
+        "top" : this.isExternal ? 0 : bounds[ 1 ],
+        "width" : bounds[ 2 ],
+        "height" : bounds[ 3 ]
+      } );
+      if( this.isExternal ) { // find better approach (specific view)
+        this.$el.parent().css( {
+          "width" : bounds[ 2 ],
+          "height" : bounds[ 3 ]
+        } );
+      }
     }
 
   } );

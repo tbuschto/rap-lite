@@ -25,7 +25,9 @@
 
     isPublic : true,
 
-    properties : [ "bounds", "text" ]
+    properties : [ "bounds", "text" ],
+
+    destructor : "destroy"
 
   } );
 

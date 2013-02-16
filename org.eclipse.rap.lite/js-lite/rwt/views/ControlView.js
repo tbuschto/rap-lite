@@ -28,6 +28,7 @@
       rwt.theme.StyleUtil.applyBrowserFixes( this.$el );
       this.applyParent();
       this.applyCssClasses();
+      this.model.on( "destroy", this.remove, this );
       this.model.on( "change:bounds", this.renderBounds, this );
       this.model.on( "change:visibility", this.renderVisibility, this );
       this.model.on( "change:background", this.renderBackground, this );

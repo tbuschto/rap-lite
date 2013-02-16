@@ -4,8 +4,6 @@ import org.eclipse.rap.rwt.RWT;
 import org.eclipse.rap.rwt.application.AbstractEntryPoint;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
-import org.eclipse.swt.events.ControlEvent;
-import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -15,6 +13,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Shell;
 
 
 public class RapLiteEntryPoint extends AbstractEntryPoint {
@@ -23,6 +22,15 @@ public class RapLiteEntryPoint extends AbstractEntryPoint {
   private Composite layer1;
   private Composite layer2;
   private StackLayout stack;
+  private Label otherLabel;
+  private Shell otherShell;
+
+  @Override
+  protected Shell createShell( Display display ) {
+    Shell result = new Shell( display, SWT.BORDER );
+    result.setLayout( new GridLayout( 1, false ) );
+    return result;
+  }
 
   @Override
   protected void createContents( Composite parent ) {
@@ -119,7 +127,34 @@ public class RapLiteEntryPoint extends AbstractEntryPoint {
       }
     } );
     createLayerSwitch( parent );
+    createShellOpener( parent );
   }
+
+  private void createShellOpener( final Composite parent ) {
+    final Button b = new Button( parent, SWT.PUSH );
+    b.setText( "Needs more space!" );
+    b.addListener( SWT.Selection, new Listener() {
+      @Override
+      public void handleEvent( Event event ) {
+        createOtherShell( parent );
+        b.dispose();
+        Button c = new Button( parent, SWT.PUSH );
+        c.setText( "Say Hello!" );
+        parent.layout();
+        c.addListener( SWT.Selection, new Listener() {
+          @Override
+          public void handleEvent( Event event ) {
+            String newText = otherLabel.getText() + " " + "Hello from the other Side!";
+            System.out.println( newText );
+            otherLabel.setText( newText );
+            otherShell.pack();
+          }
+        } );
+      }
+    } );
+
+  }
+
 
   private void createLayerSwitch( final Composite layer ) {
     Button button = new Button( layer, SWT.PUSH );
@@ -132,6 +167,27 @@ public class RapLiteEntryPoint extends AbstractEntryPoint {
         layer.getParent().layout();
       }
     } );
+  }
+
+  private void createOtherShell( Composite parent ) {
+    otherShell = new Shell( parent.getDisplay(), SWT.BORDER );
+    otherShell.setLayout( new GridLayout( 1, true ) );
+    otherLabel = new Label( otherShell, SWT.WRAP );
+    GridData gridData = new GridData();
+    gridData.widthHint = 200;
+    otherLabel.setLayoutData( gridData );
+    otherShell.setLocation( 500, 100 );
+    otherLabel.setText( "This is another Shell!" );
+    Button a = new Button( otherShell, SWT.PUSH );
+    a.setText( "I had enough" );
+    a.addListener( SWT.Selection, new Listener() {
+      @Override
+      public void handleEvent( Event event ) {
+        otherShell.close();
+      }
+    } );
+    otherShell.pack();
+    otherShell.open();
   }
 
 }

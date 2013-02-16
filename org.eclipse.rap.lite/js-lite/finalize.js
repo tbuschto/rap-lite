@@ -29,7 +29,10 @@
       }
       throw new Error( errMsg );
     }
-    new rwt.widgets.Display( element );
+    var display = new rwt.widgets.Display( element );
+    if( args.shellExtractor ) {
+      display.setShellExtractor( args.shellExtractor );
+    }
     $.get( url + "?lite=true", function( response ) {
       rwt.remote.MessageProcessor.processMessage( response );
     } );

@@ -34,7 +34,9 @@
 
     isPublic : true,
 
-    properties : rwt.widgets.Control.handlerProperties
+    properties : rwt.widgets.Control.handlerProperties,
+
+    destructor : "destroy"
 
   } );
 

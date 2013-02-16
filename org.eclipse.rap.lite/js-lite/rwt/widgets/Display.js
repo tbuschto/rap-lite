@@ -39,6 +39,16 @@
       server.send();
     },
 
+    setShellExtractor : function( func ) {
+      this._extractor = func;
+    },
+
+    getShellExtractor : function( func ) {
+      return this._extractor;
+    },
+
+    _extractor : function(){},
+
     _appendWindowSize : function() {
       var width = $( this.el ).innerWidth();
       var height = $( this.el ).innerHeight();

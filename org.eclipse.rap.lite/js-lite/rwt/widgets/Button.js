@@ -39,7 +39,9 @@
 
     properties : [ "bounds", "text", "image", "selection" ],
 
-    events : [ "Selection" ]
+    events : [ "Selection" ],
+
+    destructor : "destroy"
 
   } );
 
