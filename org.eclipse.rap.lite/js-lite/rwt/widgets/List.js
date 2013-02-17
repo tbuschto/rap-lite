@@ -8,7 +8,12 @@
     name : "List",
 
     defaults : {
-      items : []
+      items : [],
+      selection : []
+    },
+
+    select : function( index ) {
+      this.set( "selection", [ index ] );
     }
 
   } );

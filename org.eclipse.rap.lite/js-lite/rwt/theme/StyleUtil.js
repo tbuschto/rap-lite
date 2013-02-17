@@ -171,10 +171,12 @@
         return "url(/" + imageArr[ 0 ] + ")";
       },
       "background-color" : function( rgba ) {
-        return "#" + rwt.util.Colors.rgbToHexString( rgba );
+        var result = _.isString( rgba ) ? rgba : "#" + rwt.util.Colors.rgbToHexString( rgba );
+        return result === "undefined" ? "transparent" : result;
       },
       "color" : function( rgba ) {
-        return "#" + rwt.util.Colors.rgbToHexString( rgba );
+        var result = _.isString( rgba ) ? rgba : "#" + rwt.util.Colors.rgbToHexString( rgba );
+        return result === "undefined" ? "inherit" : result;
       },
       "border" : function( border ) {
         var result;

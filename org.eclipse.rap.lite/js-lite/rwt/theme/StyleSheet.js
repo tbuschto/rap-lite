@@ -58,6 +58,7 @@
         }
       } );
       var result = "\n" + sheet.join( "\n\n" ) + "\n";
+      console.log( result );
       var styleEl = document.createElement( 'style' ); // USE JQUERY
       styleEl.type = "text/css";
       if( styleEl.styleSheet ) {
