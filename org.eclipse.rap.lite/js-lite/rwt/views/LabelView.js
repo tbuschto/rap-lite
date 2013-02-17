@@ -20,7 +20,7 @@
   } );
 
   rwt.views.ViewProviderRegistry.add( {
-    model : "rwt.model.Label",
+    model : "rwt.widgets.Label",
     create : function( model ) {
       return new rwt.views.LabelView( { "model" : model } );
     }

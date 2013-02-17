@@ -16,10 +16,7 @@
         _.pick( properties, [ "parent", "style", "customVariant" ] ),
         { parse : true }
       );
-      var view = new rwt.views.LabelView( {
-        "model" : model
-      } );
-      model.view = view;
+      model.view = rwt.views.ViewFactory.createView( "rwt.widgets.Label", model );
       return model;
     },
 

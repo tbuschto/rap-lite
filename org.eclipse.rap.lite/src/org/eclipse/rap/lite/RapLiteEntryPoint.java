@@ -12,6 +12,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 
@@ -64,6 +65,19 @@ public class RapLiteEntryPoint extends AbstractEntryPoint {
     final Label label = new Label( parent, SWT.WRAP );
     label.setText( "Hello there!" );
     label.setLayoutData( new GridData( SWT.FILL, SWT.TOP, true, false ) );
+    final List list = new List( parent, SWT.V_SCROLL | SWT.BORDER );
+    String[] items = new String[ 100 ];
+    for( int i = 0; i < items.length; i++ ) {
+      items[ i ] = "Item Value " + Math.round( Math.random() * 10000 ) / 100.0;
+    }
+    list.setItems( items );
+    list.addListener( SWT.Selection, new Listener() {
+      @Override
+      public void handleEvent( Event event ) {
+        label.setText( list.getSelection()[ 0 ] );
+      }
+    } );
+    list.setLayoutData( new GridData( 150, 250 ) );
     createLayerSwitch( parent );
   }
 
