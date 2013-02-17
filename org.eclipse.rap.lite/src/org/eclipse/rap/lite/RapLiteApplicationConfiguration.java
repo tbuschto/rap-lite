@@ -28,6 +28,7 @@ public class RapLiteApplicationConfiguration implements ApplicationConfiguration
 
   private void registerThemes( Application application ) {
     application.addStyleSheet( RWT.DEFAULT_THEME_ID, "theme/legacy.css" );
+    application.addStyleSheet( RWT.DEFAULT_THEME_ID, "theme/hacks.css" );
     application.addStyleSheet( RWT.DEFAULT_THEME_ID, "theme/native.css" );
   }
 

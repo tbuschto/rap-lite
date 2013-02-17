@@ -1,0 +1,20 @@
+List-Item:selected,List-Item:selected:hover { /* order of rules is currently lost */
+  color: #ffffff;
+  background-color: #00589f;
+  background-image: gradient(
+    linear, left top, left bottom,
+    from( #5882b5 ),
+    to( #416693 )
+  );
+}
+
+List-Item:even:selected:hover {
+  color: #ffffff;
+  background-color: #818181;
+  background-image: gradient(
+    linear, left top, left bottom,
+    from( #5882b5 ),
+    to( #416693 )
+  );
+}
+

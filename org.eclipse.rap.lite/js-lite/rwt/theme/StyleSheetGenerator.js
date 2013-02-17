@@ -34,6 +34,7 @@
     },
 
     _createWidgetSheet : function( theme, element ) {
+      // TODO : restore rule order (or get from a source where order is preserved)
       var result = null;
       var props = theme.theme[ element ];
       if( props ) {

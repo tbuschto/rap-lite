@@ -8,7 +8,14 @@
     name : "List",
 
     defaults : {
-      items : []
+      items : [],
+      selection : []
+    },
+
+    select : function( index ) {
+      this.trigger( "logic:selection" );
+      this.set( "selection", [ index ] );
+      this.trigger( "selection" );
     }
 
   } );
@@ -21,12 +28,15 @@
         { parse : true }
       );
       model.view = rwt.views.ViewFactory.createView( "rwt.widgets.List", model );
+      new rwt.synchronizer.SelectionSynchronizer( model );
       return model;
     },
 
     isPublic : true,
 
     properties : [ "bounds", "items" ],
+
+    events : [ "Selection" ],
 
     destructor : "destroy"
 
