@@ -56,12 +56,15 @@
       if( this.isKeyframes() ) {
         result = rwt.theme.StyleUtil.fixKeyframesSelector( this.getFirstElement() );
       } else {
-        result = prefix ? [ "." + rwt.theme.StyleUtil.DISPLAY_CLASS ] : [];
+        result = [];
         for( var i = 0; i < elements.length; i++ ) {
           rwt.theme.StyleUtil.fixSelector( elements[ i ] );
           result.push( elements[ i ].join( "" ) );
         }
-        result = result.join( " " );
+        result = result.join( " > " );
+        if( prefix ) {
+          result = "." + rwt.theme.StyleUtil.DISPLAY_CLASS + " " + result;
+        }
       }
       return result;
     },

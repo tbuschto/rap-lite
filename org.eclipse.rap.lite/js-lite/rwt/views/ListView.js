@@ -5,7 +5,7 @@
 
   var TextTemplate = rwt.templates.TextTemplate;
 
-  rwt.views.ListView = rwt.views.ControlView.extend( {
+  rwt.views.ListView = rwt.views.ContainerView.extend( {
 
     name : "ListView",
 
@@ -15,10 +15,10 @@
 
     renderChanges : function( changes ) {
       if( changes.items ) {
-        this.renderContent( this.$el, this.model );
+        this.renderContent( this.$container, this.model );
       }
       if( changes.items || changes.selection ) {
-        this.renderSelection( this.$el, this.model );
+        this.renderSelection( this.$container, this.model );
       }
     },
 
@@ -66,6 +66,17 @@
     "List" : function( styleSheet, rules ) {
       var supported = [ "background-color", "border", "font", "cursor" ];
       styleSheet.addRules( rules, { "addClass" : ".ListView" }, supported );
+      var rule = styleSheet.getRule( [ [ ".ListView" ], [ ".container"] ] );
+      rule.set( {
+        "position" : "absolute",
+        "overflow" : "hidden",
+        "left" : "0px",
+        "top" : "0px",
+        "min-width" : "100%"
+      } );
+      styleSheet.getRule( ".ListView" ).set( {
+        "overflow" : "auto"
+      } );
     },
 
     "List-Item" : function( styleSheet, rules ) {
@@ -77,7 +88,8 @@
         "white-space" : "nowrap",
         "display" : "block",
         "vertical-align" : "middle",
-        "cursor" : "default"
+        "cursor" : "default",
+        "min-width" : "100%"
       } );
     }
 
