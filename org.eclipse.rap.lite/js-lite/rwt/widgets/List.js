@@ -34,7 +34,7 @@
 
     isPublic : true,
 
-    properties : [ "bounds", "items" ],
+    properties : [ "bounds", "items", "topIndex" ],
 
     events : [ "Selection" ],
 

@@ -9,6 +9,12 @@
   };
 
   rwt.scroller.NativeScroller.prototype = {
+
+    setTop : function( value ) {
+      //$( this.wrapper ).scrollTop( value ); //could depend on custom variant
+      $( this.wrapper ).animate( { "scrollTop" : value } );
+    }
+
   };
 
   var createWrapper = function() {
@@ -40,8 +46,8 @@
         "overflow" : "auto",
         "left" : "0px",
         "top" : "0px",
-        "width" : "100%",
-        "height" : "100%"
+        "right" : "0px",
+        "bottom" : "0px"
       } );
       styleSheet.getRule( [ ".NativeScroller", ".container" ] ).set( {
         "position" : "absolute",

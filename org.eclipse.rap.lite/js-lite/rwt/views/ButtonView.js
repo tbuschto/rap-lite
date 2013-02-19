@@ -78,7 +78,8 @@
       StyleUtil.parseSpacing( styleSheet, rules, subWidgets );
       styleSheet.getRule( ".ButtonView" ).set( {
         "user-select" : "none",
-        "white-space" : "nowrap"
+        "white-space" : "nowrap",
+        "text-align" : "center"
       } );
       styleSheet.getRule( subWidgets ).set( {
         "display" : "inline-block",

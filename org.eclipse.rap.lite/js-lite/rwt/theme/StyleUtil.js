@@ -60,6 +60,7 @@
     },
 
     parseSpacing : function( styleSheet, rules, subWidgets ) {
+      // TODO use margin-left instead, overwrite with :first-child to 0
       _.forEach( rules, function( rule ) {
         var selector = rule.selector;
         if( rule.has( "spacing" ) ) {

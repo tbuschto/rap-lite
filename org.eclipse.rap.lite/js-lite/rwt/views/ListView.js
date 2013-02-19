@@ -32,6 +32,9 @@
       if( changes.items || changes.selection ) {
         this.renderSelection( this.$container , this.model );
       }
+      if( changes.topIndex ) {
+        this.renderTopIndex( this.$container, this.model );
+      }
     },
 
     renderContent : function( el, model ) {
@@ -58,6 +61,12 @@
       _.forEach( selection, function( index ) {
         children.eq( index ).addClass( "selected" );
       } );
+    },
+
+    renderTopIndex : function( el, model ) {
+      var index = model.get( "topIndex" );
+      var top = el.children().eq( index ).position().top;
+      this.scroller.setTop( top );
     },
 
     select : function( event ) {

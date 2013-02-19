@@ -61,10 +61,12 @@ public class RapLiteEntryPoint extends AbstractEntryPoint {
 
 
   private void createOtherSide( Composite parent ) {
-    parent.setLayout( new GridLayout() );
+    parent.setLayout( new GridLayout( 2, false ) );
     final Label label = new Label( parent, SWT.WRAP );
     label.setText( "Hello there!" );
-    label.setLayoutData( new GridData( SWT.FILL, SWT.TOP, true, false ) );
+    GridData layoutData = new GridData( SWT.FILL, SWT.TOP, true, false );
+    layoutData.horizontalSpan = 2;
+    label.setLayoutData( layoutData );
     final List list = new List( parent, SWT.V_SCROLL | SWT.BORDER );
     String[] items = new String[ 100 ];
     for( int i = 0; i < items.length; i++ ) {
@@ -78,6 +80,15 @@ public class RapLiteEntryPoint extends AbstractEntryPoint {
       }
     } );
     list.setLayoutData( new GridData( 150, 250 ) );
+    Button scroll = new Button( parent, SWT.PUSH );
+    scroll.setText( "scroll" );
+    scroll.addListener( SWT.Selection, new Listener() {
+      @Override
+      public void handleEvent( Event event ) {
+        list.setTopIndex( ( int )( Math.random() * ( list.getItemCount() -1 ) ) );
+      }
+    } );
+    scroll.setLayoutData( new GridData( SWT.FILL, SWT.CENTER, true, false ) );
     createLayerSwitch( parent );
   }
 
