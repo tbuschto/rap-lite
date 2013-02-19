@@ -5,7 +5,7 @@
 
   var TextTemplate = rwt.templates.TextTemplate;
 
-  rwt.views.ListView = rwt.views.ContainerView.extend( {
+  rwt.views.ListView = rwt.views.ControlView.extend( {
 
     name : "ListView",
 
@@ -13,12 +13,24 @@
       "mousedown .List-Item" : "select"
     },
 
+    initialize : function() {
+      this.initializeList();
+    },
+
+    initializeList : function() {
+      this.initializeControl();
+      this.scroller = rwt.scroller.ScrollerFactory.createScroller( this );
+      this.$el.append( this.scroller.wrapper );
+      this.$container = $( this.scroller.container );
+      this.$container.addClass( "listviewcontainer" );
+    },
+
     renderChanges : function( changes ) {
       if( changes.items ) {
         this.renderContent( this.$container, this.model );
       }
       if( changes.items || changes.selection ) {
-        this.renderSelection( this.$container, this.model );
+        this.renderSelection( this.$container , this.model );
       }
     },
 
@@ -66,23 +78,14 @@
     "List" : function( styleSheet, rules ) {
       var supported = [ "background-color", "border", "font", "cursor" ];
       styleSheet.addRules( rules, { "addClass" : ".ListView" }, supported );
-      var rule = styleSheet.getRule( [ [ ".ListView" ], [ ".container"] ] );
-      rule.set( {
-        "position" : "absolute",
-        "overflow" : "hidden",
-        "left" : "0px",
-        "top" : "0px",
-        "min-width" : "100%"
-      } );
-      styleSheet.getRule( ".ListView" ).set( {
-        "overflow" : "auto"
-      } );
     },
 
     "List-Item" : function( styleSheet, rules ) {
       var supported = [ "padding", "color", "font", "background-color", "background" ];
       styleSheet.addRules( rules, { "addClass" : ".ListView" }, supported );
-      styleSheet.getRule( ".List-Item" ).set( {
+      // TODO : currently selection elements are always connected with "<",
+      // ".ListView .ListItem" wouldnt work.
+      styleSheet.getRule( [ [ ".listviewcontainer" ], [ ".List-Item" ] ] ).set( {
         "user-select" : "none",
         "margin" : "0px",
         "white-space" : "nowrap",
