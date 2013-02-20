@@ -39,6 +39,7 @@
 
     render : function() {
       this.renderChanges( _.stuff( this.model.changedAttributes() ) );
+      this.trigger( "render" );
     },
 
     renderChanges : function() {},

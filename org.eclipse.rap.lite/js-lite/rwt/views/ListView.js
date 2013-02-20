@@ -47,10 +47,10 @@
         content[ i ] = TextTemplate.render( i % 2 === 0 ? evenClasses : oddClasses, items[ i ] );
       }
       el.empty();
-      el.append( content.join( "" ) );
+      el.append( content.join( "" ) );// TODO : Make template
     },
 
-    renderSelection : function( el, model ) {
+    renderSelection : function( el, model ) {// TODO : to render util
       // TODO : optimization potential
       var selection = model.get( "selection" );
       var oldSelection = model.previous( "selection" );

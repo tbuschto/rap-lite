@@ -13,7 +13,7 @@
     },
 
     select : function( index ) {
-      //this.trigger( "logic:selection" );
+      //this.trigger( "logic:selection" ); // TODO, for multi seleciton, etc.
       this.set( "selection", [ index ] );
       this.trigger( "selection" );
     }
