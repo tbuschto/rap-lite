@@ -27,8 +27,8 @@
         "overflow" : "hidden",
         "left" : "0px",
         "top" : "0px",
-        "width" : "100%",
-        "height" : "100%"
+        "right" : "0px",
+        "bottom" : "0px"
       } );
       styleSheet.getRule( ".CompositeView" ).set( {
         "overflow" : "visible"

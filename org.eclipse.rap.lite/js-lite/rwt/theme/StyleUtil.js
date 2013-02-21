@@ -234,13 +234,14 @@
         "user-select" : "-webkit-user-select",
         "animation" : "-webkit-animation",
         "animation-fill-mode" : "-webkit-animation-fill-mode",
-        "transform" : "-webkit-transform"
+        "transform" : "-webkit-transform",
+        "transition" : "-webkit-transition"
       },
       "gecko" : {
         "user-select" : "-moz-user-select",
         "animation" : "-moz-animation",
         "animation-fill-mode" : "-moz-animation-fill-mode",
-        "transform" : "-moz-transform"
+        "transition" : "-moz-transition"
       }
     },
 

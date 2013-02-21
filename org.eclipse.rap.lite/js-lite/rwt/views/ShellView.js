@@ -51,6 +51,9 @@
     "Shell" : function( styleSheet, rules ) {
       var supported = [ "background-color", "border", "padding", "font" ];
       styleSheet.addRules( rules, { "addClass" : ".ShellView" }, supported );
+      styleSheet.getRule( ".ShellView" ).set( {
+        "transition" : "width, height 200ms"
+      } );
     }
 
   } );
