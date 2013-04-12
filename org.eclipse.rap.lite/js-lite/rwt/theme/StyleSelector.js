@@ -14,7 +14,7 @@
 
   rwt.theme.StyleSelector.prototype = {
 
-    toString : function( forBrowser ) {
+    asString : function( forBrowser ) {
       var result = [];
       for( var i = 0; i < this._selectorList.length; i++ ) {
         result.push( this._selectorToString( this._selectorList[ i ], forBrowser ) );

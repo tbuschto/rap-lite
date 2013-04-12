@@ -1,12 +1,3 @@
-stacked composites
-minimal list
-free floating ("hijacked") shells
-list with animations, slim scroll, virtual rendering
-
-colored gradient-buttons
 focus frame
 text and combo
 clientscripting
-
-destroy
-

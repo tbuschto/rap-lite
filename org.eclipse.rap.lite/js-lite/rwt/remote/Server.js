@@ -23,6 +23,8 @@ namespace( "rwt.remote" );
       this._requestCounter = value;
     },
 
+    setUISessionId : function() {
+    },
 
     getRemoteObject : function( target ) {
       return rwt.remote.RemoteObjectFactory.getRemoteObject( target );

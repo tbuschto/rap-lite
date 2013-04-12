@@ -20,6 +20,9 @@
         case "webkit":
           result = "-webkit-";
         break;
+        case "newmshtml":
+          result = "-ms-";
+        break;
         default:
           result = "";
         break;
@@ -36,7 +39,7 @@
       }
       var result = [];
       _.forEach( selectorArr, function( selector ) {
-        result.push( selector.toString( prefixed ) );
+        result.push( selector.asString  ? selector.asString( prefixed ) : selector.toString( prefixed ) );
       } );
       return result.join( ", " );
     },

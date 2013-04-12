@@ -51,6 +51,8 @@
     }
   };
 
+  rap._.removeWrapper = function(){};
+
   _.mixin( {
     "stuff" : function( obj ) {
       for( var key in obj ) {

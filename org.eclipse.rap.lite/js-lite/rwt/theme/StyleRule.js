@@ -14,11 +14,11 @@
       } else {
         this.selector = new rwt.theme.StyleSelector( selector );
       }
-      this.selectorString = this.selector.toString();
+      this.selectorString = this.selector.asString();
     },
 
-    toString : function() {
-      return   this.selector.toString( true )
+    asString : function() { // IE8 can not overwrite toString?
+      return   this.selector.asString( true )
              + StyleUtil.ruleBodyToString( this.attributes, this.selector.isKeyframes(), "" );
     }
 

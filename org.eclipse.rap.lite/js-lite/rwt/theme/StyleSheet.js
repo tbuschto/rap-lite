@@ -54,7 +54,7 @@
       var sheet = [];
       _.forEach( this._rules, function( rule ) {
         if( !_.isEmpty( rule.attributes ) ) {
-          sheet.push( rule.toString() );
+          sheet.push( rule.asString() );
         }
       } );
       var result = "\n" + sheet.join( "\n\n" ) + "\n";
